@@ -13,6 +13,14 @@ class Samsung_AC_F1F2com : public sensor::Sensor, public PollingComponent, publi
   void update() override;
   void loop() override;
   void dump_config() override;
+ 
+ protected:
+  boolean check_data_() const;
+  std::vector<uint8_t> data_;
+ 
+  bool receiving_{false};
+  uint8_t data_count_;
+  uint32_t last_transmission_{0};
 };
 
 }  // namespace Samsung_AC_F1F2com
