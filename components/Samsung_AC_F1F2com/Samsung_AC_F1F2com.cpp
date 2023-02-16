@@ -1,3 +1,20 @@
+/* 
+One Datapackage consists of:
+<start> <src> <dst> <cmd> <data: 8 bytes> <chksum> <end>
+
+With:
+Byte   Identifier   Comments
+----------------------------
+1      Start  : start of message (0x32)
+2      Src    : Source address
+3      Dst    : Destination address
+4      Cmd    : Command byte
+5-12   Data   : Data is always 8 bytes in length, unused bytes will be zero
+13     Chksum : Checksum of message which is the XOR of bytes 2-12
+14     End    : end of message (0x34)
+
+*/
+
 #include "esphome/core/log.h"
 #include "Samsung_AC_F1F2com.h"
 
@@ -32,7 +49,7 @@ void Samsung_AC_F1F2com::loop() {
     uint8_t c;
     read_byte(&c);
     if (!receiving_) {
-      if (c != 0xaa)    //Wenn nicht End-Marker empfangen (0x34) dann weiter empfangen
+      if (c != 0x34)    //Wenn nicht End-Marker empfangen (0x34) dann weiter empfangen
         continue;
       receiving_ = true;
       continue;
@@ -45,7 +62,24 @@ void Samsung_AC_F1F2com::loop() {
       receiving_ = false;
     }
   }
+}
 
+bool ESmart3Component::check_data_() const {
+    if (data_[0] != 0x32) {
+        ESP_LOGW(TAG, "unexpected start byte (not 0x32): %d", data_[0]);
+        return false;
+    }
+    //crc berechnen: xor data_[1] bis data_[11]
+    int i;
+    int crc = data_[1];
+    for (i = 1; i <= 11; i++) {
+        crc = crc ^ data[i];
+    }
+    bool result = false;
+    if (crc == data_[12]) crc = true;
+    if (!result)
+        ESP_LOGW(TAG, "data checksum failed");
+    return result;
 }
 
 void Samsung_AC_F1F2com::dump_config(){
