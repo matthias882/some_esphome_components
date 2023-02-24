@@ -9,7 +9,7 @@ namespace Samsung_AC_F1F2com {
 
 class Samsung_AC_F1F2com : public PollingComponent, public uart::UARTDevice {
  public:
-  void set_room_temp_sensor(sensor::Sensor *room_temp_sensor) { room_temp_sensor_ = room_temp_sensor; }
+  void set_room_temp_sensor_1(sensor::Sensor *room_temp_sensor_1) { room_temp_sensor_1_ = room_temp_sensor_1; }
  
   void setup() override;
   void update() override;
@@ -20,7 +20,7 @@ class Samsung_AC_F1F2com : public PollingComponent, public uart::UARTDevice {
   boolean check_data_() const;
   void parse_data_();
  
- sensor::Sensor *room_temp_sensor_{nullptr};
+ sensor::Sensor *room_temp_sensor_1_{nullptr};
  
   std::vector<uint8_t> data_;
   bool receiving_{false};
