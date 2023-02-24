@@ -88,7 +88,8 @@ void ESmart3Component::parse_data_() {
 }
 
 void Samsung_AC_F1F2com::dump_config(){
-    ESP_LOGCONFIG(TAG, "Samsung_AC_F1F2com:");
+  ESP_LOGCONFIG(TAG, "Samsung_AC_F1F2com:");
+  this->check_uart_settings(2400, 1, UART_CONFIG_PARITY_EVEN, 8);
 }
 
 }  // namespace Samsung_AC_F1F2com
