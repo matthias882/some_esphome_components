@@ -21,7 +21,7 @@ Byte   Identifier   Comments
 namespace esphome {
 namespace Samsung_AC_F1F2com {
 
-static const char *TAG = "Samsung_AC_F1F2com.sensor";
+static const char *TAG = "Samsung_AC_F1F2com";
 
 void Samsung_AC_F1F2com::setup() {
 
