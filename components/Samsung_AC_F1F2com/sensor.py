@@ -15,11 +15,11 @@ CONFIG_SCHEMA = uart.UART_DEVICE_SCHEMA.extend({
     cv.Optional(CONF_ROOM_TEMP_1): sensor.sensor_schema(UNIT_CELSIUS, ICON_THERMOMETER, 0),
 }).extend(cv.polling_component_schema('60s'))
 
-def to_code(config):
+async def to_code(config):
     var = cg.new_Pvariable(config[CONF_ID])
-    yield cg.register_component(var, config)
-    yield sensor.register_sensor(var, config)
-    yield uart.register_uart_device(var, config)
+    await cg.register_component(var, config)
+    await sensor.register_sensor(var, config)
+    await uart.register_uart_device(var, config)
     
     if CONF_ROOM_TEMP_1 in config:
         sens = await sensor.new_sensor(config[CONF_ROOM_TEMP_1])
