@@ -7,7 +7,7 @@
 namespace esphome {
 namespace Samsung_AC_F1F2com {
 
-class Samsung_AC_F1F2com : public sensor::Sensor, public PollingComponent, public uart::UARTDevice {
+class Samsung_AC_F1F2com : public PollingComponent, public uart::UARTDevice {
  public:
   void setup() override;
   void update() override;
@@ -16,6 +16,7 @@ class Samsung_AC_F1F2com : public sensor::Sensor, public PollingComponent, publi
  
  protected:
   boolean check_data_() const;
+  void parse_data_();
   std::vector<uint8_t> data_;
  
   bool receiving_{false};
