@@ -8,7 +8,7 @@ DEPENDENCIES = ['uart']
 Samsung_AC_F1F2com_ns = cg.esphome_ns.namespace('Samsung_AC_F1F2com')
 Samsung_AC_F1F2comComponent = Samsung_AC_F1F2com_ns.class_('Samsung_AC_F1F2comComponent', cg.PollingComponent, uart.UARTDevice)
 
-CONF_ROOM_TEMP_1 = "room_temp"
+CONF_ROOM_TEMP_1 = "room_temp_1"
 
 CONFIG_SCHEMA = uart.UART_DEVICE_SCHEMA.extend({
     cv.GenerateID(): cv.declare_id(Samsung_AC_F1F2comComponent),
@@ -23,5 +23,5 @@ def to_code(config):
     
     if CONF_ROOM_TEMP_1 in config:
         sens = await sensor.new_sensor(config[CONF_ROOM_TEMP_1])
-        cg.add(var.set_room_temp_sensor(sens))
+        cg.add(var.set_room_temp_sensor_1(sens))
 
