@@ -81,6 +81,11 @@ bool ESmart3Component::check_data_() const {
         ESP_LOGW(TAG, "data checksum failed");
     return result;
 }
+  
+void ESmart3Component::parse_data_() {
+  ESP_LOGD(TAG, "Raw: %02X %02x %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X",
+           data_[0], data_[1], data_[2], data_[3], data_[4], data_[5], data_[6], data_[7], data_[8], data_[9], data_[10], data_[11], data_[12], data_[13], data_[14], data_[15]);
+}
 
 void Samsung_AC_F1F2com::dump_config(){
     ESP_LOGCONFIG(TAG, "Samsung_AC_F1F2com:");
