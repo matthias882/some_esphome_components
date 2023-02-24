@@ -7,7 +7,7 @@
 namespace esphome {
 namespace Samsung_AC_F1F2com {
 
-class Samsung_AC_F1F2com : public PollingComponent, public uart::UARTDevice {
+class Samsung_AC_F1F2comComponent : public PollingComponent, public uart::UARTDevice {
  public:
   void set_room_temp_sensor_1(sensor::Sensor *room_temp_sensor_1) { room_temp_sensor_1_ = room_temp_sensor_1; }
  
