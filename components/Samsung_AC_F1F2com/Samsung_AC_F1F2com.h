@@ -16,6 +16,8 @@ class Samsung_AC_F1F2comComponent : public PollingComponent, public uart::UARTDe
   void loop() override;
   void dump_config() override;
  
+ float get_setup_priority() const { return setup_priority::DATA; }
+ 
  protected:
   boolean check_data_() const;
   void parse_data_();
