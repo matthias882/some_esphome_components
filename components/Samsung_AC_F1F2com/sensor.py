@@ -1,6 +1,6 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
-from esphome.components import uart, sensor
+from esphome.components import sensor, uart
 from esphome.const import CONF_ID, ICON_EMPTY, ICON_THERMOMETER, UNIT_EMPTY, UNIT_CELSIUS
 
 DEPENDENCIES = ['uart']
@@ -15,12 +15,12 @@ CONFIG_SCHEMA = uart.UART_DEVICE_SCHEMA.extend({
     cv.Optional(CONF_ROOM_TEMP_1): sensor.sensor_schema(UNIT_CELSIUS, ICON_THERMOMETER, 0),
 }).extend(cv.polling_component_schema('60s'))
 
-async def to_code(config):
+def to_code(config):
     var = cg.new_Pvariable(config[CONF_ID])
-    await cg.register_component(var, config)
-    await uart.register_uart_device(var, config)
+    yield cg.register_component(var, config)
+    yield uart.register_uart_device(var, config)
     
     if CONF_ROOM_TEMP_1 in config:
-        sens = await sensor.new_sensor(config[CONF_ROOM_TEMP_1])
+        sens = yield sensor.new_sensor(config[CONF_ROOM_TEMP_1])
         cg.add(var.set_room_temp_sensor_1(sens))
 
