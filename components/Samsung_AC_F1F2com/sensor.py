@@ -1,7 +1,9 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.components import sensor, uart
-from esphome.const import CONF_ID, ICON_EMPTY, ICON_THERMOMETER, UNIT_EMPTY, UNIT_CELSIUS
+from esphome.const import CONF_ID, UNIT_VOLT, ICON_FLASH, UNIT_AMPERE, UNIT_WATT, \
+    ICON_POWER, ICON_CURRENT_AC, CONF_TEMPERATURE, ICON_THERMOMETER, UNIT_CELSIUS, \
+    UNIT_PERCENT, ICON_PERCENT, UNIT_EMPTY, ICON_EMPTY
 
 DEPENDENCIES = ['uart']
 
@@ -14,6 +16,7 @@ CONFIG_SCHEMA = uart.UART_DEVICE_SCHEMA.extend({
     cv.GenerateID(): cv.declare_id(Samsung_AC_F1F2comComponent),
     cv.Optional(CONF_ROOM_TEMP_1): sensor.sensor_schema(UNIT_CELSIUS, ICON_THERMOMETER, 0),
 }).extend(cv.polling_component_schema('60s'))
+
 
 def to_code(config):
     var = cg.new_Pvariable(config[CONF_ID])
