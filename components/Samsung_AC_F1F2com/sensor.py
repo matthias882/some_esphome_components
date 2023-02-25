@@ -6,7 +6,7 @@ from esphome.const import CONF_ID, ICON_EMPTY, ICON_THERMOMETER, UNIT_EMPTY, UNI
 DEPENDENCIES = ['uart']
 
 Samsung_AC_F1F2com_ns = cg.esphome_ns.namespace('Samsung_AC_F1F2com')
-Samsung_AC_F1F2comComponent = Samsung_AC_F1F2com_ns.class_('Samsung_AC_F1F2comComponent', cg.PollingComponent, uart.UARTDevice)
+Samsung_AC_F1F2comComponent = Samsung_AC_F1F2com_ns.class_('Samsung_AC_F1F2comComponent', uart.UARTDevice, cg.PollingComponent)
 
 CONF_ROOM_TEMP_1 = "room_temp_1"
 
