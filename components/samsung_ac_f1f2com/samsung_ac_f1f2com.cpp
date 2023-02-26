@@ -71,27 +71,29 @@ void Samsung_AC_F1F2comComponent::loop() {
 float Samsung_AC_F1F2comComponent::get_setup_priority() const { return setup_priority::DATA; }
 
 bool Samsung_AC_F1F2comComponent::check_data_() const {
-    if (data_[0] != 0x32) {
-        ESP_LOGW(TAG, "unexpected start byte (not 0x32): %d", data_[0]);
-        return false;
-    }
-    //crc berechnen: xor data_[1] bis data_[11]
-    int i;
-    int crc = data_[1];
-    for (i = 1; i <= 11; i++) {
-        crc = crc ^ data_[i];
-    }
-    bool result = false;
-    if (crc == data_[12]) crc = true;
-    if (!result)
-        ESP_LOGW(TAG, "data checksum failed");
-    return result;
+  ESP_LOGD(TAG, "Raw: %02X %02x %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X",
+           data_[0], data_[1], data_[2], data_[3], data_[4], data_[5], data_[6], data_[7], data_[8], data_[9], data_[10], data_[11], data_[12], data_[13], data_[14], data_[15]);  
+  if (data_[0] != 0x32) {
+    ESP_LOGW(TAG, "unexpected start byte (not 0x32): %d", data_[0]);
+    return false;
+  }
+  //crc berechnen: xor data_[1] bis data_[11]
+  int i;
+  int crc = data_[1];
+  for (i = 1; i <= 11; i++) {
+    crc = crc ^ data_[i];
+  }
+  bool result = false;
+  if (crc == data_[12]) crc = true;
+  if (!result)
+    ESP_LOGW(TAG, "data checksum failed");
+  return result;
 }
   
 void Samsung_AC_F1F2comComponent::parse_data_() {
   uint16_t room_temp_1 = 33;
   
-  ESP_LOGD(TAG, "Raw: %02X %02x %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X",
+  ESP_LOGD(TAG, "Raw_parse: %02X %02x %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X",
            data_[0], data_[1], data_[2], data_[3], data_[4], data_[5], data_[6], data_[7], data_[8], data_[9], data_[10], data_[11], data_[12], data_[13], data_[14], data_[15]);
   if (room_temp_1_sensor_ != nullptr)
     room_temp_1_sensor_->publish_state(room_temp_1);
