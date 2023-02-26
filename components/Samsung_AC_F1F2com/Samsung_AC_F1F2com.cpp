@@ -23,15 +23,15 @@ namespace Samsung_AC_F1F2com {
 
 static const char *TAG = "Samsung_AC_F1F2com";
 
-void Samsung_AC_F1F2com::setup() {
+void Samsung_AC_F1F2comComponent::setup() {
 
 }
 
-void Samsung_AC_F1F2com::update() {
+void Samsung_AC_F1F2comComponent::update() {
 
 }
 
-void Samsung_AC_F1F2com::loop() {
+void Samsung_AC_F1F2comComponent::loop() {
   const uint32_t now = millis();
   if (receiving_ && (now - last_transmission_ >= 500)) {
     // last transmission too long ago. Reset RX index.
@@ -64,7 +64,7 @@ void Samsung_AC_F1F2com::loop() {
   }
 }
 
-bool ESmart3Component::check_data_() const {
+bool Samsung_AC_F1F2comComponent::check_data_() const {
     if (data_[0] != 0x32) {
         ESP_LOGW(TAG, "unexpected start byte (not 0x32): %d", data_[0]);
         return false;
@@ -82,7 +82,7 @@ bool ESmart3Component::check_data_() const {
     return result;
 }
   
-void ESmart3Component::parse_data_() {
+void Samsung_AC_F1F2comComponent::parse_data_() {
   uint16_t room_temp_1 = 33;
   
   ESP_LOGD(TAG, "Raw: %02X %02x %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X",
@@ -91,7 +91,7 @@ void ESmart3Component::parse_data_() {
     room_temp_sensor_1_->publish_state(room_temp_1);
 }
 
-void Samsung_AC_F1F2com::dump_config(){
+void Samsung_AC_F1F2comComponent::dump_config(){
   ESP_LOGCONFIG(TAG, "Samsung_AC_F1F2com:");
   LOG_SENSOR("  ", "Room Temp 1", room_temp_sensor_1_);
   this->check_uart_settings(2400, 1, UART_CONFIG_PARITY_EVEN, 8);
