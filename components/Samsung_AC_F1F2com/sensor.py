@@ -14,7 +14,14 @@ CONF_ROOM_TEMP_1 = "room_temp_1"
 
 CONFIG_SCHEMA = uart.UART_DEVICE_SCHEMA.extend({
     cv.GenerateID(): cv.declare_id(Samsung_AC_F1F2comComponent),
-    cv.Optional(CONF_ROOM_TEMP_1): sensor.sensor_schema(UNIT_CELSIUS, ICON_THERMOMETER, 0),
+
+    cv.Optional(CONF_ROOM_TEMP_1): sensor.sensor_schema(
+        unit_of_measurement=UNIT_CELSIUS,
+        icon=ICON_THERMOMETER,
+        accuracy_decimals=0,
+        device_class=DEVICE_CLASS_TEMPERATURE,
+        state_class=STATE_CLASS_MEASUREMENT,
+    ),
 }).extend(cv.polling_component_schema('60s'))
 
 
