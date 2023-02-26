@@ -97,7 +97,7 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
   //         data_[0], data_[1], data_[2], data_[3], data_[4], data_[5], data_[6], data_[7], data_[8], data_[9], data_[10], data_[11], data_[12], data_[13]);
   //if (room_temp_1_sensor_ != nullptr)
     //room_temp_1_sensor_->publish_state(room_temp_1);
-    room_temp_1_sensor_ = 55;
+    room_temp_1 = 55;
 }
 
 }  // namespace samsung_ac_f1f2com
