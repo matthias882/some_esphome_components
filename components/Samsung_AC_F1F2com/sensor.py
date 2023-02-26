@@ -1,36 +1,69 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
-from esphome.components import sensor, uart
+from esphome.components import sensor
 from esphome.const import CONF_ID, UNIT_VOLT, ICON_FLASH, UNIT_AMPERE, UNIT_WATT, \
     ICON_POWER, ICON_CURRENT_AC, CONF_TEMPERATURE, ICON_THERMOMETER, UNIT_CELSIUS, \
     UNIT_PERCENT, ICON_PERCENT, UNIT_EMPTY, ICON_EMPTY
 
-DEPENDENCIES = ['uart']
+from esphome.const import (
+    CONF_VOLTAGE,
+    CONF_CURRENT,
+    CONF_BATTERY_LEVEL,
+    CONF_MAX_TEMPERATURE,
+    CONF_MIN_TEMPERATURE,
+    DEVICE_CLASS_VOLTAGE,
+    DEVICE_CLASS_CURRENT,
+    DEVICE_CLASS_BATTERY,
+    DEVICE_CLASS_TEMPERATURE,
+    STATE_CLASS_MEASUREMENT,
+    UNIT_VOLT,
+    UNIT_AMPERE,
+    UNIT_PERCENT,
+    UNIT_CELSIUS,
+    ICON_FLASH,
+    ICON_PERCENT,
+    ICON_COUNTER,
+    ICON_THERMOMETER,
+    ICON_GAUGE,
+)
+from . import Samsung_AC_F1F2comComponent, CONF_SAMSUNG_F1F2COM_ID
+
+
 
 Samsung_AC_F1F2com_ns = cg.esphome_ns.namespace('Samsung_AC_F1F2com')
 Samsung_AC_F1F2comComponent = Samsung_AC_F1F2com_ns.class_('Samsung_AC_F1F2comComponent', uart.UARTDevice, cg.PollingComponent)
 
 CONF_ROOM_TEMP_1 = "room_temp_1"
 
-CONFIG_SCHEMA = uart.UART_DEVICE_SCHEMA.extend({
-    cv.GenerateID(): cv.declare_id(Samsung_AC_F1F2comComponent),
+TYPES = [
+    CONF_ROOM_TEMP_1,
+]
 
-    cv.Optional(CONF_ROOM_TEMP_1): sensor.sensor_schema(
-        unit_of_measurement=UNIT_CELSIUS,
-        icon=ICON_THERMOMETER,
-        accuracy_decimals=0,
-        device_class=DEVICE_CLASS_TEMPERATURE,
-        state_class=STATE_CLASS_MEASUREMENT,
-    ),
-}).extend(cv.polling_component_schema('60s'))
+CONFIG_SCHEMA = cv.All(
+    cv.Schema(
+        {
+            cv.GenerateID(CONF_SAMSUNG_F1F2COM_ID): cv.use_id(Samsung_AC_F1F2comComponent),
+
+            cv.Optional(CONF_ROOM_TEMP_1): sensor.sensor_schema(
+                unit_of_measurement=UNIT_CELSIUS,
+                icon=ICON_THERMOMETER,
+                accuracy_decimals=0,
+                device_class=DEVICE_CLASS_TEMPERATURE,
+                state_class=STATE_CLASS_MEASUREMENT,
+            ),
+        }
+    ).extend(cv.COMPONENT_SCHEMA)
+)
 
 
-def to_code(config):
-    var = cg.new_Pvariable(config[CONF_ID])
-    yield cg.register_component(var, config)
-    yield uart.register_uart_device(var, config)
-    
-    if CONF_ROOM_TEMP_1 in config:
-        sens = yield sensor.new_sensor(config[CONF_ROOM_TEMP_1])
-        cg.add(var.set_room_temp_sensor_1(sens))
+async def setup_conf(config, key, hub):
+    if key in config:
+        conf = config[key]
+        sens = await sensor.new_sensor(conf)
+        cg.add(getattr(hub, f"set_{key}_sensor")(sens))
 
+
+async def to_code(config):
+    hub = await cg.get_variable(config[CONF_SAMSUNG_F1F2COM_ID])
+    for key in TYPES:
+        await setup_conf(config, key, hub)
