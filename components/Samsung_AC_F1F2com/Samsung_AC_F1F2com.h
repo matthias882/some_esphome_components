@@ -11,6 +11,7 @@ class Samsung_AC_F1F2comComponent : public PollingComponent, public uart::UARTDe
  public:
  Samsung_AC_F1F2comComponent() = default;
 
+  // SENSORS
   void set_room_temp_sensor_1(sensor::Sensor *room_temp_sensor_1) { room_temp_sensor_1_ = room_temp_sensor_1; }
  
   void setup() override;
@@ -18,7 +19,7 @@ class Samsung_AC_F1F2comComponent : public PollingComponent, public uart::UARTDe
   void loop() override;
   void dump_config() override;
  
- float get_setup_priority() const { return setup_priority::DATA; }
+ float get_setup_priority() const override;
  
  protected:
   boolean check_data_() const;
