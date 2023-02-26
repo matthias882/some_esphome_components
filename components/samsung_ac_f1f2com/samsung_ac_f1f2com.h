@@ -5,7 +5,7 @@
 #include "esphome/components/uart/uart.h"
 
 namespace esphome {
-namespace Samsung_AC_F1F2com {
+namespace samsung_ac_f1f2com {
 
 class Samsung_AC_F1F2comComponent : public PollingComponent, public uart::UARTDevice {
  public:
@@ -33,5 +33,5 @@ class Samsung_AC_F1F2comComponent : public PollingComponent, public uart::UARTDe
   uint32_t last_transmission_{0};
 };
 
-}  // namespace Samsung_AC_F1F2com
+}  // namespace samsung_ac_f1f2com
 }  // namespace esphome

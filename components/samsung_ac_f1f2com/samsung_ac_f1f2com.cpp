@@ -16,13 +16,13 @@ Byte   Identifier   Comments
 */
 
 #include "esphome/core/log.h"
-#include "Samsung_AC_F1F2com.h"
+#include "samsung_ac_f1f2com.h"
 #include <vector>
 
 namespace esphome {
-namespace Samsung_AC_F1F2com {
+namespace samsung_ac_f1f2com {
 
-static const char *TAG = "Samsung_AC_F1F2com";
+static const char *TAG = "samsung_ac_f1f2com";
 
 void Samsung_AC_F1F2comComponent::setup() {
 
@@ -99,5 +99,5 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
     room_temp_sensor_1_->publish_state(room_temp_1);
 }
 
-}  // namespace Samsung_AC_F1F2com
+}  // namespace samsung_ac_f1f2com
 }  // namespace esphome
