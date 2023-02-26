@@ -59,7 +59,7 @@ void Samsung_AC_F1F2comComponent::loop() {
       continue;
     }
     data_.push_back(c);
-    if (data_.size == 14) {
+    if (data_.size() == 14) {
       if (check_data_())
         parse_data_();
       data_.clear();
