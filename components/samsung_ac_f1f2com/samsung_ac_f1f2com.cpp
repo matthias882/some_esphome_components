@@ -30,7 +30,7 @@ void Samsung_AC_F1F2comComponent::setup() {
 
 void Samsung_AC_F1F2comComponent::dump_config(){
   ESP_LOGCONFIG(TAG, "Samsung_AC_F1F2com:");
-  this->check_uart_settings(2400, 1, UART_CONFIG_PARITY_EVEN, 8);
+  this->check_uart_settings(2400, 1, esphome::uart::UART_CONFIG_PARITY_EVEN, 8);
 }
 
 void Samsung_AC_F1F2comComponent::update() {

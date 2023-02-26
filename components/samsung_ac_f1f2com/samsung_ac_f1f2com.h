@@ -22,7 +22,7 @@ class Samsung_AC_F1F2comComponent : public PollingComponent, public uart::UARTDe
  float get_setup_priority() const override;
  
  protected:
-  boolean check_data_() const;
+  bool check_data_() const;
   void parse_data_();
  
  sensor::Sensor *room_temp_sensor_1_{nullptr};
