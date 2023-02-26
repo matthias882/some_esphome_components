@@ -22,7 +22,7 @@ from esphome.const import (
     ICON_THERMOMETER,
     ICON_GAUGE,
 )
-from . import Samsung_AC_F1F2comComponent, CONF_SAMSUNG_F1F2COM_ID
+from . import Samsung_AC_F1F2comComponent, CONF_SAMSUNG_AC_F1F2COM_ID
 
 
 
@@ -38,7 +38,7 @@ TYPES = [
 CONFIG_SCHEMA = cv.All(
     cv.Schema(
         {
-            cv.GenerateID(CONF_SAMSUNG_F1F2COM_ID): cv.use_id(Samsung_AC_F1F2comComponent),
+            cv.GenerateID(CONF_SAMSUNG_AC_F1F2COM_ID): cv.use_id(Samsung_AC_F1F2comComponent),
 
             cv.Optional(CONF_ROOM_TEMP_1): sensor.sensor_schema(
                 unit_of_measurement=UNIT_CELSIUS,
@@ -60,6 +60,6 @@ async def setup_conf(config, key, hub):
 
 
 async def to_code(config):
-    hub = await cg.get_variable(config[CONF_SAMSUNG_F1F2COM_ID])
+    hub = await cg.get_variable(config[CONF_SAMSUNG_AC_F1F2COM_ID])
     for key in TYPES:
         await setup_conf(config, key, hub)
