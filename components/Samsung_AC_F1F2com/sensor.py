@@ -1,10 +1,6 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.components import sensor
-from esphome.const import CONF_ID, UNIT_VOLT, ICON_FLASH, UNIT_AMPERE, UNIT_WATT, \
-    ICON_POWER, ICON_CURRENT_AC, CONF_TEMPERATURE, ICON_THERMOMETER, UNIT_CELSIUS, \
-    UNIT_PERCENT, ICON_PERCENT, UNIT_EMPTY, ICON_EMPTY
-
 from esphome.const import (
     CONF_VOLTAGE,
     CONF_CURRENT,
