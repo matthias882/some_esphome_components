@@ -82,6 +82,7 @@ bool Samsung_AC_F1F2comComponent::check_data_() const {
   uint8_t crc = data_[1];
   for (i = 2; i <= 11; i++) {
     crc = crc xor data_[i];
+    ESP_LOGW(TAG, "crc: %02x data: %02x", crc, data_[i]);
   }
   bool result = false;
   if (crc == data_[12]) crc = true;
