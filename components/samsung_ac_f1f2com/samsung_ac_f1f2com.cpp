@@ -24,9 +24,7 @@ namespace samsung_ac_f1f2com {
 
 static const char *TAG = "samsung_ac_f1f2com";
 
-void Samsung_AC_F1F2comComponent::setup() {
-
-}
+void Samsung_AC_F1F2comComponent::setup() {}
 
 void Samsung_AC_F1F2comComponent::dump_config(){
   ESP_LOGCONFIG(TAG, "Samsung_AC_F1F2com:");
@@ -95,8 +93,8 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
   
   ESP_LOGD(TAG, "Raw: %02X %02x %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X",
            data_[0], data_[1], data_[2], data_[3], data_[4], data_[5], data_[6], data_[7], data_[8], data_[9], data_[10], data_[11], data_[12], data_[13], data_[14], data_[15]);
-  if (room_temp_sensor_1_ != nullptr)
-    room_temp_sensor_1_->publish_state(room_temp_1);
+  if (room_temp_1_sensor_ != nullptr)
+    room_temp_1_sensor_->publish_state(room_temp_1);
 }
 
 }  // namespace samsung_ac_f1f2com
