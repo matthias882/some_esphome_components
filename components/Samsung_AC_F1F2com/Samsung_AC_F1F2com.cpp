@@ -17,6 +17,7 @@ Byte   Identifier   Comments
 
 #include "esphome/core/log.h"
 #include "Samsung_AC_F1F2com.h"
+#include <vector>
 
 namespace esphome {
 namespace Samsung_AC_F1F2com {
@@ -25,6 +26,11 @@ static const char *TAG = "Samsung_AC_F1F2com";
 
 void Samsung_AC_F1F2comComponent::setup() {
 
+}
+
+void Samsung_AC_F1F2comComponent::dump_config(){
+  ESP_LOGCONFIG(TAG, "Samsung_AC_F1F2com:");
+  this->check_uart_settings(2400, 1, UART_CONFIG_PARITY_EVEN, 8);
 }
 
 void Samsung_AC_F1F2comComponent::update() {
@@ -64,6 +70,8 @@ void Samsung_AC_F1F2comComponent::loop() {
   }
 }
 
+float Samsung_AC_F1F2comComponent::get_setup_priority() const { return setup_priority::DATA; }
+
 bool Samsung_AC_F1F2comComponent::check_data_() const {
     if (data_[0] != 0x32) {
         ESP_LOGW(TAG, "unexpected start byte (not 0x32): %d", data_[0]);
@@ -89,12 +97,6 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
            data_[0], data_[1], data_[2], data_[3], data_[4], data_[5], data_[6], data_[7], data_[8], data_[9], data_[10], data_[11], data_[12], data_[13], data_[14], data_[15]);
   if (room_temp_sensor_1_ != nullptr)
     room_temp_sensor_1_->publish_state(room_temp_1);
-}
-
-void Samsung_AC_F1F2comComponent::dump_config(){
-  ESP_LOGCONFIG(TAG, "Samsung_AC_F1F2com:");
-  LOG_SENSOR("  ", "Room Temp 1", room_temp_sensor_1_);
-  this->check_uart_settings(2400, 1, UART_CONFIG_PARITY_EVEN, 8);
 }
 
 }  // namespace Samsung_AC_F1F2com
