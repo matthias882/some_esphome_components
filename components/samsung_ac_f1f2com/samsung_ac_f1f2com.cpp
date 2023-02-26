@@ -86,7 +86,7 @@ bool Samsung_AC_F1F2comComponent::check_data_() const {
   bool result = false;
   if (crc == data_[12]) crc = true;
   if (!result)
-    ESP_LOGW(TAG, "data checksum failed");
+    ESP_LOGW(TAG, "data checksum failed: %02x != %02x", crc, data_[12]);
   return result;
 }
   
