@@ -81,7 +81,7 @@ bool Samsung_AC_F1F2comComponent::check_data_() const {
   int i;
   int crc = data_[1];
   for (i = 2; i <= 11; i++) {
-    crc = crc ^ data_[i];
+    crc = crc xor data_[i];
   }
   bool result = false;
   if (crc == data_[12]) crc = true;
