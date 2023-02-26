@@ -24,11 +24,6 @@ from esphome.const import (
 )
 from . import Samsung_AC_F1F2comComponent, CONF_SAMSUNG_AC_F1F2COM_ID
 
-
-
-Samsung_AC_F1F2com_ns = cg.esphome_ns.namespace('Samsung_AC_F1F2com')
-Samsung_AC_F1F2comComponent = Samsung_AC_F1F2com_ns.class_('Samsung_AC_F1F2comComponent', uart.UARTDevice, cg.PollingComponent)
-
 CONF_ROOM_TEMP_1 = "room_temp_1"
 
 TYPES = [
