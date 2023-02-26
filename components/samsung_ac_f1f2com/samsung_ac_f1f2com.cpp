@@ -79,7 +79,7 @@ bool Samsung_AC_F1F2comComponent::check_data_() const {
   }
   //crc berechnen: xor data_[1] bis data_[11]
   int i;
-  int crc = data_[1];
+  uint8_t crc = data_[1];
   for (i = 2; i <= 11; i++) {
     crc = crc xor data_[i];
   }
