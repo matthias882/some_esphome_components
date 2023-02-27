@@ -24,6 +24,7 @@ class Samsung_AC_F1F2comComponent : public PollingComponent, public uart::UARTDe
  protected:
   bool check_data_() const;
   void parse_data_();
+  int8_t byte_to_temperature_(uint8_t databyte);
  
  sensor::Sensor *room_temp_1_sensor_{nullptr};
  

@@ -27,7 +27,14 @@ static const char *TAG = "samsung_ac_f1f2com";
 static const uint8_t DATA_SRC = 1;
 static const uint8_t DATA_DST = 2;
 static const uint8_t DATA_CMD = 3;
-static const uint8_t DATA_DATA = 4;
+static const uint8_t DATA_BYTE1 = 4;
+static const uint8_t DATA_BYTE2 = 5;
+static const uint8_t DATA_BYTE3 = 6;
+static const uint8_t DATA_BYTE4 = 7;
+static const uint8_t DATA_BYTE5 = 8;
+static const uint8_t DATA_BYTE6 = 9;
+static const uint8_t DATA_BYTE7 = 10;
+static const uint8_t DATA_BYTE8 = 11;
 
 static const uint8_t ADDR_INDOOR_UNIT_1 = 0x00;
 static const uint8_t ADDR_INDOOR_UNIT_2 = 0x01;
@@ -105,7 +112,8 @@ bool Samsung_AC_F1F2comComponent::check_data_() const {
 }
   
 void Samsung_AC_F1F2comComponent::parse_data_() {
-  uint16_t room_temp_1 = 33;
+  //uint16_t room_temp_1 = 33;
+  int8_t temp1, temp2, temp3, temp4;
   //if (data_[DATA_SRC] == ADDR_INDOOR_UNIT_1 && data_[DATA_DST] == ADDR_OUTDOOR_UNIT_1) { //data from indoor-unit 1 to outdoor-unit
   //  ESP_LOGD(TAG, "Raw: %02X %02x %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X",
   //           data_[0], data_[1], data_[2], data_[3], data_[4], data_[5], data_[6], data_[7], data_[8], data_[9], data_[10], data_[11], data_[12], data_[13]);
@@ -115,6 +123,16 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
     if (data_[DATA_CMD] == 0x20) {
       ESP_LOGD(TAG, "Raw: %02X %02x %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X",
              data_[0], data_[1], data_[2], data_[3], data_[4], data_[5], data_[6], data_[7], data_[8], data_[9], data_[10], data_[11], data_[12], data_[13]);
+      //Set-Temperature: Byte1 in CMD20
+      temp1 = byte_to_temperature_(data_[DATA_BYTE1]);
+      //Set-Temperature: Byte1 in CMD20
+      temp2 = byte_to_temperature_(data_[DATA_BYTE2]);
+      //Set-Temperature: Byte1 in CMD20
+      temp3 = byte_to_temperature_(data_[DATA_BYTE3]);
+      //Set-Temperature: Byte1 in CMD20
+      temp4 = byte_to_temperature_(data_[DATA_BYTE8]);
+      ESP_LOGD(TAG, "Temperaturen: Set:%U - Byte2:%U - Byte3:%U - Byte8:%U",
+             temp1, temp2, temp3, temp4);
     }
     
   }
@@ -123,6 +141,12 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
   //         data_[0], data_[1], data_[2], data_[3], data_[4], data_[5], data_[6], data_[7], data_[8], data_[9], data_[10], data_[11], data_[12], data_[13]);
   //if (room_temp_1_sensor_ != nullptr)
     //room_temp_1_sensor_->publish_state(room_temp_1);
+}
+
+int8_t Samsung_AC_F1F2comComponent::byte_to_temperature_(uint8_t databyte) {
+  int8_t temperature = databyte & 0b00111111;   //mask bit 5-0
+  temperature = temperature + 9;
+  return temperature;
 }
 
 }  // namespace samsung_ac_f1f2com
