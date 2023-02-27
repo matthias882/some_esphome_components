@@ -5,13 +5,13 @@ One Datapackage consists of:
 With:
 Byte   Identifier   Comments
 ----------------------------
-1      Start  : start of message (0x32)
-2      Src    : Source address
-3      Dst    : Destination address
-4      Cmd    : Command byte
-5-12   Data   : Data is always 8 bytes in length, unused bytes will be zero
-13     Chksum : Checksum of message which is the XOR of bytes 2-12
-14     End    : end of message (0x34)
+0      Start  : start of message (0x32)
+1      Src    : Source address (00 01 02 03 = indoor units; C8 = outdoor unit; AD = ?; F0 = ?)
+2      Dst    : Destination address
+3      Cmd    : Command byte
+4-11   Data   : Data is always 8 bytes in length, unused bytes will be zero
+12     Chksum : Checksum of message which is the XOR of bytes 2-12
+13     End    : end of message (0x34)
 
 */
 
@@ -23,6 +23,17 @@ namespace esphome {
 namespace samsung_ac_f1f2com {
 
 static const char *TAG = "samsung_ac_f1f2com";
+
+static const uint8_t DATA_SRC = 1;
+static const uint8_t DATA_DST = 2;
+static const uint8_t DATA_CMD = 3;
+static const uint8_t DATA_DATA = 4;
+
+static const uint8_t ADDR_INDOOR_UNIT_1 = 0x00;
+static const uint8_t ADDR_INDOOR_UNIT_2 = 0x01;
+static const uint8_t ADDR_INDOOR_UNIT_3 = 0x02;
+static const uint8_t ADDR_INDOOR_UNIT_4 = 0x03;
+static const uint8_t ADDR_OUTDOOR_UNIT_1 = 0xC8;
 
 void Samsung_AC_F1F2comComponent::setup() {}
 
@@ -74,8 +85,8 @@ void Samsung_AC_F1F2comComponent::loop() {
 float Samsung_AC_F1F2comComponent::get_setup_priority() const { return setup_priority::DATA; }
 
 bool Samsung_AC_F1F2comComponent::check_data_() const {
-  ESP_LOGD(TAG, "Raw: %02X %02x %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X",
-           data_[0], data_[1], data_[2], data_[3], data_[4], data_[5], data_[6], data_[7], data_[8], data_[9], data_[10], data_[11], data_[12], data_[13]);  
+  //ESP_LOGD(TAG, "Raw: %02X %02x %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X",
+  //         data_[0], data_[1], data_[2], data_[3], data_[4], data_[5], data_[6], data_[7], data_[8], data_[9], data_[10], data_[11], data_[12], data_[13]);  
   if (data_[0] != 0x32) {
     ESP_LOGW(TAG, "unexpected start byte (not 0x32): %d", data_[0]);
     return false;
@@ -95,12 +106,15 @@ bool Samsung_AC_F1F2comComponent::check_data_() const {
   
 void Samsung_AC_F1F2comComponent::parse_data_() {
   uint16_t room_temp_1 = 33;
+  if (data_[DATA_SRC] == ADDR_INDOOR_UNIT_1 && data_[DATA_DST] == ADDR_OUTDOOR_UNIT_1) { //data from indoor-unit 1 to outdoor-unit
+    ESP_LOGD(TAG, "Raw: %02X %02x %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X",
+             data_[0], data_[1], data_[2], data_[3], data_[4], data_[5], data_[6], data_[7], data_[8], data_[9], data_[10], data_[11], data_[12], data_[13]);
+  }
   
   //ESP_LOGD(TAG, "Raw: %02X %02x %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X",
   //         data_[0], data_[1], data_[2], data_[3], data_[4], data_[5], data_[6], data_[7], data_[8], data_[9], data_[10], data_[11], data_[12], data_[13]);
   //if (room_temp_1_sensor_ != nullptr)
     //room_temp_1_sensor_->publish_state(room_temp_1);
-    room_temp_1 = 55;
 }
 
 }  // namespace samsung_ac_f1f2com
