@@ -131,7 +131,7 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
       temp3 = byte_to_temperature_(data_[DATA_BYTE3]);
       //Set-Temperature: Byte1 in CMD20
       temp4 = byte_to_temperature_(data_[DATA_BYTE8]);
-      ESP_LOGD(TAG, "Temperaturen: Set:%U - Byte2:%U - Byte3:%U - Byte8:%U",
+      ESP_LOGD(TAG, "Temperaturen: Set:%u - Byte2:%u - Byte3:%u - Byte8:%u",
              temp1, temp2, temp3, temp4);
     }
     
