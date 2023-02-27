@@ -125,13 +125,13 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
              data_[0], data_[1], data_[2], data_[3], data_[4], data_[5], data_[6], data_[7], data_[8], data_[9], data_[10], data_[11], data_[12], data_[13]);
       //Set-Temperature: Byte1 in CMD20
       temp1 = byte_to_temperature_(data_[DATA_BYTE1]);
-      //Set-Temperature: Byte1 in CMD20
+      //Room-Temperature: Byte2 in CMD20
       temp2 = byte_to_temperature_(data_[DATA_BYTE2]);
-      //Set-Temperature: Byte1 in CMD20
+      //???-Temperature: Byte3 in CMD20
       temp3 = byte_to_temperature_(data_[DATA_BYTE3]);
-      //Set-Temperature: Byte1 in CMD20
+      //???-Temperature: Byte8 in CMD20
       temp4 = byte_to_temperature_(data_[DATA_BYTE8]);
-      ESP_LOGD(TAG, "Temperaturen: Set:%u - Byte2:%u - Byte3:%u - Byte8:%u",
+      ESP_LOGD(TAG, "Temperaturen: Set:%u - Room:%u - Byte3:%u - Byte8:%u",
              temp1, temp2, temp3, temp4);
     }
     
