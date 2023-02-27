@@ -52,18 +52,21 @@ void Samsung_AC_F1F2comComponent::loop() {
   while (available()) {
     uint8_t c;
     read_byte(&c);
-    if (!receiving_) {
-      if (c != 0x34)    //Wenn nicht End-Marker empfangen (0x34) dann weiter empfangen
-        continue;
+    if (c == 0x32 && !receiving_) {//start-byte found
       receiving_ = true;
-      continue;
-    }
-    data_.push_back(c);
-    if (data_.size() == 14) {
-      if (check_data_())
-        parse_data_();
       data_.clear();
-      receiving_ = false;
+    }
+    if (receiving_) {//reading datablock of 14 bytes in progress
+      data_.push_back(c);
+      if (data_.size() == 14 && c == 0x34) {//endbyte found and lenght of datablock is correct
+        receiving_ = false;
+        if (check_data_())
+        parse_data_();
+      }
+      else if (data_.size() >= 14) {//no endbyte found at 14th byte
+        ESP_LOGW(TAG, "received datablock to long (> 14)");
+        receiving_ = false;
+      }
     }
   }
 }
