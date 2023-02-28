@@ -131,7 +131,7 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
       temp3 = byte_to_temperature_(data_[DATA_BYTE3]);
       //???-Temperature: Byte8 in CMD20
       temp4 = byte_to_temperature_(data_[DATA_BYTE8]);
-      ESP_LOGD(TAG, "Temperaturen unit1: Set:%u - Room:%u - Byte3:%u - Byte8:%u",
+      ESP_LOGD(TAG, "Temperaturen unit1: Set:%u - Room:%u - Pipe in:%u - Pipe out:%u",
              temp1, temp2, temp3, temp4);
     }   
   }
@@ -145,7 +145,7 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
       temp3 = byte_to_temperature_(data_[DATA_BYTE3]);
       //???-Temperature: Byte8 in CMD20
       temp4 = byte_to_temperature_(data_[DATA_BYTE8]);
-      ESP_LOGD(TAG, "Temperaturen unit2: Set:%u - Room:%u - Byte3:%u - Byte8:%u",
+      ESP_LOGD(TAG, "Temperaturen unit2: Set:%u - Room:%u - Pipe in:%u - Pipe out:%u",
              temp1, temp2, temp3, temp4);
     }   
   }
@@ -157,8 +157,7 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
 }
 
 int8_t Samsung_AC_F1F2comComponent::byte_to_temperature_(uint8_t databyte) {
-  int8_t temperature = databyte & 0b00111111;   //mask bit 5-0
-  temperature = temperature + 9;
+  int8_t temperature = databyte - 55;   //0°C = 55 (0x37)
   return temperature;
 }
 
