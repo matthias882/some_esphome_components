@@ -113,7 +113,7 @@ bool Samsung_AC_F1F2comComponent::check_data_() const {
 void Samsung_AC_F1F2comComponent::parse_data_() {
   //uint16_t room_temp_1 = 33;
   int8_t indoor1_room_temp_sensor, indoor1_set_temp_sensor, indoor1_pipe_in_temp_sensor, indoor1_pipe_out_temp_sensor, fanspeed, mode;
-  int8_t indoor2_room_temp_sensor, indoor2_set_temp_sensor, indoor2_pipe_in_temp_sensor, indoor2_pipe_out_temp_sensor,
+  int8_t indoor2_room_temp_sensor, indoor2_set_temp_sensor, indoor2_pipe_in_temp_sensor, indoor2_pipe_out_temp_sensor;
   bool bladeswing, power;
   //uncomment next 4 lines to see all packages from indoor1 to outdoor1
   //if (data_[DATA_SRC] == ADDR_INDOOR_UNIT_1 && data_[DATA_DST] == ADDR_OUTDOOR_UNIT_1) { //data from indoor-unit 1 to outdoor-unit
