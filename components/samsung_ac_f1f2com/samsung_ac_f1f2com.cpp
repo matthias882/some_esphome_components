@@ -132,8 +132,8 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
         this->indoor1_set_temp_sensor_->publish_state(indoor1_set_temp_sensor);
 
       indoor1_room_temp_sensor = byte_to_temperature_(data_[DATA_BYTE2]);//Room-Temperature: Byte2 in CMD20
-      if (this->indoor1_room_temp_sensor_)
-        this->indoor1_room_temp_sensor_->publish_state(indoor1_room_temp_sensor);
+      //if (this->indoor1_room_temp_sensor_)
+       // this->indoor1_room_temp_sensor_->publish_state(indoor1_room_temp_sensor);
 
       indoor1_pipe_in_temp_sensor = byte_to_temperature_(data_[DATA_BYTE3]);//Pipe-In-Temperature: Byte3 in CMD20
       if (this->indoor1_pipe_in_temp_sensor_)
