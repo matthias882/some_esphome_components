@@ -121,19 +121,32 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
   //           data_[0], data_[1], data_[2], data_[3], data_[4], data_[5], data_[6], data_[7], data_[8], data_[9], data_[10], data_[11], data_[12], data_[13]);
   //}
 
-  if (data_[DATA_SRC] == ADDR_INDOOR_UNIT_1 && data_[DATA_DST] == ADDR_OUTDOOR_UNIT_1) { //data from indoor-unit 1 to outdoor-unit
+  //data from indoor-unit 1 to outdoor-unit
+  if (data_[DATA_SRC] == ADDR_INDOOR_UNIT_1 && data_[DATA_DST] == ADDR_OUTDOOR_UNIT_1) {
     if (data_[DATA_CMD] == 0x20) {
-      ESP_LOGD(TAG, "Raw data i1->o1 cmd20: %02X %02x %02X %02X %02X %02X %02X %02X",
-             data_[4], data_[5], data_[6], data_[7], data_[8], data_[9], data_[10], data_[11]);
+      //ESP_LOGD(TAG, "Raw data i1->o1 cmd20: %02X %02x %02X %02X %02X %02X %02X %02X",
+      //       data_[4], data_[5], data_[6], data_[7], data_[8], data_[9], data_[10], data_[11]);
       //temperatures
       indoor1_set_temp_sensor = byte_to_temperature_(data_[DATA_BYTE1]);//Set-Temperature: Byte1 in CMD20
+      if (this->indoor1_set_temp_sensor_)
+        this->indoor1_set_temp_sensor_->publish_state(indoor1_set_temp_sensor);
+
       indoor1_room_temp_sensor = byte_to_temperature_(data_[DATA_BYTE2]);//Room-Temperature: Byte2 in CMD20
+      if (this->indoor1_room_temp_sensor_)
+        this->indoor1_room_temp_sensor_->publish_state(indoor1_room_temp_sensor);
+
       indoor1_pipe_in_temp_sensor = byte_to_temperature_(data_[DATA_BYTE3]);//Pipe-In-Temperature: Byte3 in CMD20
+      if (this->indoor1_pipe_in_temp_sensor_)
+        this->indoor1_pipe_in_temp_sensor_->publish_state(indoor1_pipe_in_temp_sensor);
+
       indoor1_pipe_out_temp_sensor = byte_to_temperature_(data_[DATA_BYTE8]);//Pipe-Out-Temperature: Byte8 in CMD20
+      if (this->indoor1_pipe_out_temp_sensor_)
+        this->indoor1_pipe_out_temp_sensor_->publish_state(indoor1_pipe_out_temp_sensor);
+
       //fan
       fanspeed = data_[DATA_BYTE4] & 0b00001111;// fanspeed: databyte4 Bit 3-0: 0=auto, 2=low, 4=medium, 5=hight
       //swing
-      if (data_[DATA_BYTE4] & 0b11110000 == 0xD0) bladeswing = true;// bladeswing: databyte4 Bit 7-4: 0=off, D=on
+      if ((data_[DATA_BYTE4] & 0b11110000) == 0xD0) bladeswing = true;// bladeswing: databyte4 Bit 7-4: 0=off, D=on
       else bladeswing = false;
       //power on / off
       if (data_[DATA_BYTE5] & 0b10000000) power = true; //bit7 = Power on/off
@@ -143,41 +156,32 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
       //ESP_LOGD(TAG, "Temperaturen unit1: Set:%d - Room:%d - Pipe in:%d - Pipe out:%d", indoor1_set_temp_sensor, indoor1_room_temp_sensor, indoor1_pipe_in_temp_sensor, indoor1_pipe_out_temp_sensor);
     }   
   }
-  if (data_[DATA_SRC] == ADDR_INDOOR_UNIT_2 && data_[DATA_DST] == ADDR_OUTDOOR_UNIT_1) { //data from indoor-unit 1 to outdoor-unit
+
+  //data from indoor-unit 1 to outdoor-unit
+  if (data_[DATA_SRC] == ADDR_INDOOR_UNIT_2 && data_[DATA_DST] == ADDR_OUTDOOR_UNIT_1) {
     if (data_[DATA_CMD] == 0x20) {
-      //Set-Temperature: Byte1 in CMD20
-      indoor2_set_temp_sensor = byte_to_temperature_(data_[DATA_BYTE1]);
-      //Room-Temperature: Byte2 in CMD20
-      indoor2_room_temp_sensor = byte_to_temperature_(data_[DATA_BYTE2]);
-      //Pipe-In-Temperature: Byte3 in CMD20
-      indoor2_pipe_in_temp_sensor = byte_to_temperature_(data_[DATA_BYTE3]);
-      //Pipe-Out-Temperature: Byte8 in CMD20
-      indoor2_pipe_out_temp_sensor = byte_to_temperature_(data_[DATA_BYTE8]);
-      //ESP_LOGD(TAG, "Temperaturen unit2: Set:%d - Room:%d - Pipe in:%d - Pipe out:%d", temp1, temp2, temp3, temp4);
+      
+      //temperatures
+      indoor2_set_temp_sensor = byte_to_temperature_(data_[DATA_BYTE1]);//Set-Temperature: Byte1 in CMD20
+      if (this->indoor2_set_temp_sensor_)
+        this->indoor2_set_temp_sensor_->publish_state(indoor2_set_temp_sensor);
+
+      indoor2_room_temp_sensor = byte_to_temperature_(data_[DATA_BYTE2]);//Room-Temperature: Byte2 in CMD20
+      if (this->indoor2_room_temp_sensor_)
+        this->indoor2_room_temp_sensor_->publish_state(indoor2_room_temp_sensor);
+      
+      indoor2_pipe_in_temp_sensor = byte_to_temperature_(data_[DATA_BYTE3]);//Pipe-In-Temperature: Byte3 in CMD20
+      if (this->indoor2_pipe_in_temp_sensor_)
+        this->indoor2_pipe_in_temp_sensor_->publish_state(indoor2_pipe_in_temp_sensor);
+      
+      indoor2_pipe_out_temp_sensor = byte_to_temperature_(data_[DATA_BYTE8]);//Pipe-Out-Temperature: Byte8 in CMD20
+      if (this->indoor2_pipe_out_temp_sensor_)
+        this->indoor2_pipe_out_temp_sensor_->publish_state(indoor2_pipe_out_temp_sensor);
     }   
   }
   
   //ESP_LOGD(TAG, "Raw: %02X %02x %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X",
   //         data_[0], data_[1], data_[2], data_[3], data_[4], data_[5], data_[6], data_[7], data_[8], data_[9], data_[10], data_[11], data_[12], data_[13]);
-  //PUBLISH DATA FOR INDOOR UNIT 1
-  if (this->indoor1_room_temp_sensor_)
-    this->indoor1_room_temp_sensor_->publish_state(indoor1_room_temp_sensor);
-  if (this->indoor1_set_temp_sensor_)
-    this->indoor1_set_temp_sensor_->publish_state(indoor1_set_temp_sensor);
-  if (this->indoor1_pipe_in_temp_sensor_)
-    this->indoor1_pipe_in_temp_sensor_->publish_state(indoor1_pipe_in_temp_sensor);
-  if (this->indoor1_pipe_out_temp_sensor_)
-    this->indoor1_pipe_out_temp_sensor_->publish_state(indoor1_pipe_out_temp_sensor);
-
-  //PUBLISH DATA FOR INDOOR UNIT 2
-  if (this->indoor2_room_temp_sensor_)
-    this->indoor2_room_temp_sensor_->publish_state(indoor2_room_temp_sensor);
-  if (this->indoor2_set_temp_sensor_)
-    this->indoor2_set_temp_sensor_->publish_state(indoor2_set_temp_sensor);
-  if (this->indoor2_pipe_in_temp_sensor_)
-    this->indoor2_pipe_in_temp_sensor_->publish_state(indoor2_pipe_in_temp_sensor);
-  if (this->indoor2_pipe_out_temp_sensor_)
-    this->indoor2_pipe_out_temp_sensor_->publish_state(indoor2_pipe_out_temp_sensor);
 }
 
 int8_t Samsung_AC_F1F2comComponent::byte_to_temperature_(uint8_t databyte) {
