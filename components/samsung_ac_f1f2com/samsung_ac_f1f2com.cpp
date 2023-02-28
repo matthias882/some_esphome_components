@@ -131,7 +131,7 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
       temp3 = byte_to_temperature_(data_[DATA_BYTE3]);
       //???-Temperature: Byte8 in CMD20
       temp4 = byte_to_temperature_(data_[DATA_BYTE8]);
-      ESP_LOGD(TAG, "Temperaturen unit1: Set:%u - Room:%u - Pipe in:%u - Pipe out:%u",
+      ESP_LOGD(TAG, "Temperaturen unit1: Set:%d - Room:%d - Pipe in:%d - Pipe out:%d",
              temp1, temp2, temp3, temp4);
     }   
   }
@@ -145,7 +145,7 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
       temp3 = byte_to_temperature_(data_[DATA_BYTE3]);
       //???-Temperature: Byte8 in CMD20
       temp4 = byte_to_temperature_(data_[DATA_BYTE8]);
-      ESP_LOGD(TAG, "Temperaturen unit2: Set:%u - Room:%u - Pipe in:%u - Pipe out:%u",
+      ESP_LOGD(TAG, "Temperaturen unit2: Set:%d - Room:%d - Pipe in:%d - Pipe out:%d",
              temp1, temp2, temp3, temp4);
     }   
   }
