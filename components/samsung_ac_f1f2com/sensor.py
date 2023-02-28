@@ -24,10 +24,18 @@ from esphome.const import (
 )
 from . import Samsung_AC_F1F2comComponent, CONF_SAMSUNG_AC_F1F2COM_ID
 
-CONF_ROOM_TEMP_1 = "room_temp_1"
+CONF_INDOOR1_ROOM_TEMP = "indoor1_room_temp"
+CONF_INDOOR1_SET_TEMP = "indoor1_set_temp"
+CONF_INDOOR1_PIPE_IN_TEMP = "indoor1_pipe_in_temp"
+CONF_INDOOR1_PIPE_OUT_TEMP = "indoor1_pipe_out_temp"
+
+CONF_INDOOR2_ROOM_TEMP = "indoor2_room_temp"
+CONF_INDOOR2_SET_TEMP = "indoor2_set_temp"
+CONF_INDOOR2_PIPE_IN_TEMP = "indoor2_pipe_in_temp"
+CONF_INDOOR2_PIPE_OUT_TEMP = "indoor2_pipe_out_temp"
 
 TYPES = [
-    CONF_ROOM_TEMP_1,
+    CONF_INDOOR1_ROOM_TEMP,
 ]
 
 CONFIG_SCHEMA = cv.All(
@@ -35,10 +43,59 @@ CONFIG_SCHEMA = cv.All(
         {
             cv.GenerateID(CONF_SAMSUNG_AC_F1F2COM_ID): cv.use_id(Samsung_AC_F1F2comComponent),
 
-            cv.Optional(CONF_ROOM_TEMP_1): sensor.sensor_schema(
+            cv.Optional(CONF_INDOOR1_ROOM_TEMP): sensor.sensor_schema(
                 unit_of_measurement=UNIT_CELSIUS,
                 icon=ICON_THERMOMETER,
-                accuracy_decimals=1,
+                accuracy_decimals=0,
+                device_class=DEVICE_CLASS_TEMPERATURE,
+                state_class=STATE_CLASS_MEASUREMENT,
+            ),
+            cv.Optional(CONF_INDOOR1_SET_TEMP): sensor.sensor_schema(
+                unit_of_measurement=UNIT_CELSIUS,
+                icon=ICON_THERMOMETER,
+                accuracy_decimals=0,
+                device_class=DEVICE_CLASS_TEMPERATURE,
+                state_class=STATE_CLASS_MEASUREMENT,
+            ),
+            cv.Optional(CONF_INDOOR1_PIPE_IN_TEMP): sensor.sensor_schema(
+                unit_of_measurement=UNIT_CELSIUS,
+                icon=ICON_THERMOMETER,
+                accuracy_decimals=0,
+                device_class=DEVICE_CLASS_TEMPERATURE,
+                state_class=STATE_CLASS_MEASUREMENT,
+            ),
+            cv.Optional(CONF_INDOOR1_PIPE_OUT_TEMP): sensor.sensor_schema(
+                unit_of_measurement=UNIT_CELSIUS,
+                icon=ICON_THERMOMETER,
+                accuracy_decimals=0,
+                device_class=DEVICE_CLASS_TEMPERATURE,
+                state_class=STATE_CLASS_MEASUREMENT,
+            ),
+            cv.Optional(CONF_INDOOR2_ROOM_TEMP): sensor.sensor_schema(
+                unit_of_measurement=UNIT_CELSIUS,
+                icon=ICON_THERMOMETER,
+                accuracy_decimals=0,
+                device_class=DEVICE_CLASS_TEMPERATURE,
+                state_class=STATE_CLASS_MEASUREMENT,
+            ),
+            cv.Optional(CONF_INDOOR2_SET_TEMP): sensor.sensor_schema(
+                unit_of_measurement=UNIT_CELSIUS,
+                icon=ICON_THERMOMETER,
+                accuracy_decimals=0,
+                device_class=DEVICE_CLASS_TEMPERATURE,
+                state_class=STATE_CLASS_MEASUREMENT,
+            ),
+            cv.Optional(CONF_INDOOR2_PIPE_IN_TEMP): sensor.sensor_schema(
+                unit_of_measurement=UNIT_CELSIUS,
+                icon=ICON_THERMOMETER,
+                accuracy_decimals=0,
+                device_class=DEVICE_CLASS_TEMPERATURE,
+                state_class=STATE_CLASS_MEASUREMENT,
+            ),
+            cv.Optional(CONF_INDOOR2_PIPE_OUT_TEMP): sensor.sensor_schema(
+                unit_of_measurement=UNIT_CELSIUS,
+                icon=ICON_THERMOMETER,
+                accuracy_decimals=0,
                 device_class=DEVICE_CLASS_TEMPERATURE,
                 state_class=STATE_CLASS_MEASUREMENT,
             ),
