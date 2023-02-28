@@ -160,23 +160,23 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
   //ESP_LOGD(TAG, "Raw: %02X %02x %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X",
   //         data_[0], data_[1], data_[2], data_[3], data_[4], data_[5], data_[6], data_[7], data_[8], data_[9], data_[10], data_[11], data_[12], data_[13]);
   //PUBLISH DATA FOR INDOOR UNIT 1
-  if (this->indoor1_room_temp_sensor_) {
+  if (this->indoor1_room_temp_sensor_)
     this->indoor1_room_temp_sensor_->publish_state(indoor1_room_temp_sensor);
-  if (this->indoor1_set_temp_sensor_) {
+  if (this->indoor1_set_temp_sensor_)
     this->indoor1_set_temp_sensor_->publish_state(indoor1_set_temp_sensor);
-  if (this->indoor1_pipe_in_temp_sensor_) {
+  if (this->indoor1_pipe_in_temp_sensor_)
     this->indoor1_pipe_in_temp_sensor_->publish_state(indoor1_pipe_in_temp_sensor);
-  if (this->indoor1_pipe_out_temp_sensor_) {
+  if (this->indoor1_pipe_out_temp_sensor_)
     this->indoor1_pipe_out_temp_sensor_->publish_state(indoor1_pipe_out_temp_sensor);
 
   //PUBLISH DATA FOR INDOOR UNIT 2
-  if (this->indoor2_room_temp_sensor_) {
+  if (this->indoor2_room_temp_sensor_)
     this->indoor2_room_temp_sensor_->publish_state(indoor2_room_temp_sensor);
-  if (this->indoor2_set_temp_sensor_) {
+  if (this->indoor2_set_temp_sensor_)
     this->indoor2_set_temp_sensor_->publish_state(indoor2_set_temp_sensor);
-  if (this->indoor2_pipe_in_temp_sensor_) {
+  if (this->indoor2_pipe_in_temp_sensor_)
     this->indoor2_pipe_in_temp_sensor_->publish_state(indoor2_pipe_in_temp_sensor);
-  if (this->indoor2_pipe_out_temp_sensor_) {
+  if (this->indoor2_pipe_out_temp_sensor_)
     this->indoor2_pipe_out_temp_sensor_->publish_state(indoor2_pipe_out_temp_sensor);
 }
 
