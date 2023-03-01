@@ -149,8 +149,8 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
       if ((data_[DATA_BYTE4] & 0b11110000) == 0xD0) bladeswing = true;// bladeswing: databyte4 Bit 7-4: 0=off, D=on
       else bladeswing = false;
       //power on / off
-      if (data_[DATA_BYTE5] & 0b10000000) power = true; //bit7 = Power on/off
-      else power = false;
+      if (data_[DATA_BYTE5] & 0b10000000) this->indoor1_operating_->publish_state(true); //bit7 = Power on/off
+      else this->indoor1_operating_->publish_state(false);
       //mode
       mode = data_[DATA_BYTE5] & 0b00111111;//mode: 0x01=heat, 0x02=cool, 0x04=dry, 0x08=fan, 0x22=auto
       //ESP_LOGD(TAG, "Temperaturen unit1: Set:%d - Room:%d - Pipe in:%d - Pipe out:%d", indoor1_set_temp_sensor, indoor1_room_temp_sensor, indoor1_pipe_in_temp_sensor, indoor1_pipe_out_temp_sensor);

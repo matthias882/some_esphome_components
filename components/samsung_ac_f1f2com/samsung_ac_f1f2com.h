@@ -21,6 +21,10 @@ class Samsung_AC_F1F2comComponent : public PollingComponent, public uart::UARTDe
   void set_indoor2_set_temp_sensor(sensor::Sensor *indoor2_set_temp_sensor) { indoor2_set_temp_sensor_ = indoor2_set_temp_sensor; }
   void set_indoor2_pipe_in_temp_sensor(sensor::Sensor *indoor2_pipe_in_temp_sensor) { indoor2_pipe_in_temp_sensor_ = indoor2_pipe_in_temp_sensor; }
   void set_indoor2_pipe_out_temp_sensor(sensor::Sensor *indoor2_pipe_out_temp_sensor) { indoor2_pipe_out_temp_sensor_ = indoor2_pipe_out_temp_sensor; }
+
+  //BINARY SENSORS
+  void set_indoor1_operating_binary_sensor(binary_sensor::Sensor *indoor1_operating) { indoor1_operating_ = indoor1_operating; }
+  void set_indoor2_operating_binary_sensor(binary_sensor::Sensor *indoor2_operating) { indoor2_operating_ = indoor2_operating; }
  
   void setup() override;
   void update() override;
@@ -34,15 +38,18 @@ class Samsung_AC_F1F2comComponent : public PollingComponent, public uart::UARTDe
   void parse_data_();
   int8_t byte_to_temperature_(uint8_t databyte);
  
- sensor::Sensor *indoor1_room_temp_sensor_{nullptr};
- sensor::Sensor *indoor1_set_temp_sensor_{nullptr};
- sensor::Sensor *indoor1_pipe_in_temp_sensor_{nullptr};
- sensor::Sensor *indoor1_pipe_out_temp_sensor_{nullptr};
+  sensor::Sensor *indoor1_room_temp_sensor_{nullptr};
+  sensor::Sensor *indoor1_set_temp_sensor_{nullptr};
+  sensor::Sensor *indoor1_pipe_in_temp_sensor_{nullptr};
+  sensor::Sensor *indoor1_pipe_out_temp_sensor_{nullptr};
 
- sensor::Sensor *indoor2_room_temp_sensor_{nullptr};
- sensor::Sensor *indoor2_set_temp_sensor_{nullptr};
- sensor::Sensor *indoor2_pipe_in_temp_sensor_{nullptr};
- sensor::Sensor *indoor2_pipe_out_temp_sensor_{nullptr};
+  sensor::Sensor *indoor2_room_temp_sensor_{nullptr};
+  sensor::Sensor *indoor2_set_temp_sensor_{nullptr};
+  sensor::Sensor *indoor2_pipe_in_temp_sensor_{nullptr};
+  sensor::Sensor *indoor2_pipe_out_temp_sensor_{nullptr};
+
+  binary_sensor::BinarySensor *indoor1_operating_{nullptr};
+  binary_sensor::BinarySensor *indoor2_operating_{nullptr};
  
   std::vector<uint8_t> data_;
   bool receiving_{false};
