@@ -15,7 +15,7 @@ TYPES = [
 CONFIG_SCHEMA = cv.All(
     cv.Schema(
         {
-            cv.GenerateID(CONF_SAMSUNG_AC_F1F2COM_ID): cv.use_id(DalyBmsComponent),
+            cv.GenerateID(CONF_SAMSUNG_AC_F1F2COM_ID): cv.use_id(Samsung_AC_F1F2comComponent),
             cv.Optional(
                 CONF_INDOOR1_OPERATING
             ): binary_sensor.binary_sensor_schema(),
