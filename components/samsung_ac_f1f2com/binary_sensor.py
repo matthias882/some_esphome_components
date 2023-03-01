@@ -4,7 +4,7 @@ from esphome.components import binary_sensor
 from . import Samsung_AC_F1F2comComponent, CONF_SAMSUNG_AC_F1F2COM_ID
 
 CONF_INDOOR1_OPERATING = "indoor1_operating"
-CONF_INDOOR2_OPERATING = "indoor1_operating"
+CONF_INDOOR2_OPERATING = "indoor2_operating"
 
 TYPES = [
     CONF_INDOOR1_OPERATING,
