@@ -15,7 +15,7 @@ TYPES = [
 CONFIG_SCHEMA = cv.All(
     cv.Schema(
         {
-            cv.GenerateID(CONF_BMS_DALY_ID): cv.use_id(DalyBmsComponent),
+            cv.GenerateID(CONF_SAMSUNG_AC_F1F2COM_ID): cv.use_id(DalyBmsComponent),
             cv.Optional(
                 CONF_INDOOR1_OPERATING
             ): binary_sensor.binary_sensor_schema(),
@@ -35,6 +35,6 @@ async def setup_conf(config, key, hub):
 
 
 async def to_code(config):
-    hub = await cg.get_variable(config[CONF_BMS_DALY_ID])
+    hub = await cg.get_variable(config[CONF_SAMSUNG_AC_F1F2COM_ID])
     for key in TYPES:
         await setup_conf(config, key, hub)
