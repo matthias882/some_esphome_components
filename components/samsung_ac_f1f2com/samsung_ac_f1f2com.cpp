@@ -50,6 +50,24 @@ void Samsung_AC_F1F2comComponent::dump_config(){
 }
 
 void Samsung_AC_F1F2comComponent::update() {
+  //publish values for indoor unit 1
+  if (this->indoor1_set_temp_sensor_)
+        this->indoor1_set_temp_sensor_->publish_state(indoor1_set_temp_);
+  if (this->indoor1_room_temp_sensor_)
+        this->indoor1_room_temp_sensor_->publish_state(indoor1_room_temp_);
+  if (this->indoor1_pipe_in_temp_sensor_)
+        this->indoor1_pipe_in_temp_sensor_->publish_state(indoor1_pipe_in_temp_);
+  if (this->indoor1_pipe_out_temp_sensor_)
+        this->indoor1_pipe_out_temp_sensor_->publish_state(indoor1_pipe_out_temp_);
+  //publish values for indoor unit 2
+  if (this->indoor2_set_temp_sensor_)
+        this->indoor2_set_temp_sensor_->publish_state(indoor2_set_temp_);
+  if (this->indoor2_room_temp_sensor_)
+        this->indoor2_room_temp_sensor_->publish_state(indoor2_room_temp_);
+  if (this->indoor2_pipe_in_temp_sensor_)
+        this->indoor2_pipe_in_temp_sensor_->publish_state(indoor2_pipe_in_temp_);
+  if (this->indoor2_pipe_out_temp_sensor_)
+        this->indoor2_pipe_out_temp_sensor_->publish_state(indoor2_pipe_out_temp_);
 }
 
 void Samsung_AC_F1F2comComponent::loop() {
@@ -112,8 +130,7 @@ bool Samsung_AC_F1F2comComponent::check_data_() const {
   
 void Samsung_AC_F1F2comComponent::parse_data_() {
   //uint16_t room_temp_1 = 33;
-  int8_t indoor1_room_temp_sensor, indoor1_set_temp_sensor, indoor1_pipe_in_temp_sensor, indoor1_pipe_out_temp_sensor, fanspeed, mode;
-  int8_t indoor2_room_temp_sensor, indoor2_set_temp_sensor, indoor2_pipe_in_temp_sensor, indoor2_pipe_out_temp_sensor;
+  int8_t fanspeed, mode;
   bool bladeswing, power;
   //uncomment next 4 lines to see all packages from indoor1 to outdoor1
   //if (data_[DATA_SRC] == ADDR_INDOOR_UNIT_1 && data_[DATA_DST] == ADDR_OUTDOOR_UNIT_1) { //data from indoor-unit 1 to outdoor-unit
@@ -127,21 +144,17 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
       //ESP_LOGD(TAG, "Raw data i1->o1 cmd20: %02X %02x %02X %02X %02X %02X %02X %02X",
       //       data_[4], data_[5], data_[6], data_[7], data_[8], data_[9], data_[10], data_[11]);
       //temperatures
-      indoor1_set_temp_sensor = byte_to_temperature_(data_[DATA_BYTE1]);//Set-Temperature: Byte1 in CMD20
-      if (this->indoor1_set_temp_sensor_)
-        this->indoor1_set_temp_sensor_->publish_state(indoor1_set_temp_sensor);
+      indoor1_set_temp_ = byte_to_temperature_(data_[DATA_BYTE1]);//Set-Temperature: Byte1 in CMD20
+      
 
-      indoor1_room_temp_sensor = byte_to_temperature_(data_[DATA_BYTE2]);//Room-Temperature: Byte2 in CMD20
-      if (this->indoor1_room_temp_sensor_)
-        this->indoor1_room_temp_sensor_->publish_state(indoor1_room_temp_sensor);
+      indoor1_room_temp_ = byte_to_temperature_(data_[DATA_BYTE2]);//Room-Temperature: Byte2 in CMD20
+      
 
-      indoor1_pipe_in_temp_sensor = byte_to_temperature_(data_[DATA_BYTE3]);//Pipe-In-Temperature: Byte3 in CMD20
-      if (this->indoor1_pipe_in_temp_sensor_)
-        this->indoor1_pipe_in_temp_sensor_->publish_state(indoor1_pipe_in_temp_sensor);
+      indoor1_pipe_in_temp_ = byte_to_temperature_(data_[DATA_BYTE3]);//Pipe-In-Temperature: Byte3 in CMD20
+      
 
-      indoor1_pipe_out_temp_sensor = byte_to_temperature_(data_[DATA_BYTE8]);//Pipe-Out-Temperature: Byte8 in CMD20
-      if (this->indoor1_pipe_out_temp_sensor_)
-        this->indoor1_pipe_out_temp_sensor_->publish_state(indoor1_pipe_out_temp_sensor);
+      indoor1_pipe_out_temp_ = byte_to_temperature_(data_[DATA_BYTE8]);//Pipe-Out-Temperature: Byte8 in CMD20
+      
 
       //fan
       fanspeed = data_[DATA_BYTE4] & 0b00001111;// fanspeed: databyte4 Bit 3-0: 0=auto, 2=low, 4=medium, 5=hight
@@ -162,21 +175,17 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
     if (data_[DATA_CMD] == 0x20) {
       
       //temperatures
-      indoor2_set_temp_sensor = byte_to_temperature_(data_[DATA_BYTE1]);//Set-Temperature: Byte1 in CMD20
-      if (this->indoor2_set_temp_sensor_)
-        this->indoor2_set_temp_sensor_->publish_state(indoor2_set_temp_sensor);
+      indoor2_set_temp_ = byte_to_temperature_(data_[DATA_BYTE1]);//Set-Temperature: Byte1 in CMD20
+      
 
-      indoor2_room_temp_sensor = byte_to_temperature_(data_[DATA_BYTE2]);//Room-Temperature: Byte2 in CMD20
-      if (this->indoor2_room_temp_sensor_)
-        this->indoor2_room_temp_sensor_->publish_state(indoor2_room_temp_sensor);
+      indoor2_room_temp_ = byte_to_temperature_(data_[DATA_BYTE2]);//Room-Temperature: Byte2 in CMD20
       
-      indoor2_pipe_in_temp_sensor = byte_to_temperature_(data_[DATA_BYTE3]);//Pipe-In-Temperature: Byte3 in CMD20
-      if (this->indoor2_pipe_in_temp_sensor_)
-        this->indoor2_pipe_in_temp_sensor_->publish_state(indoor2_pipe_in_temp_sensor);
       
-      indoor2_pipe_out_temp_sensor = byte_to_temperature_(data_[DATA_BYTE8]);//Pipe-Out-Temperature: Byte8 in CMD20
-      if (this->indoor2_pipe_out_temp_sensor_)
-        this->indoor2_pipe_out_temp_sensor_->publish_state(indoor2_pipe_out_temp_sensor);
+      indoor2_pipe_in_temp_ = byte_to_temperature_(data_[DATA_BYTE3]);//Pipe-In-Temperature: Byte3 in CMD20
+      
+      
+      indoor2_pipe_out_temp_ = byte_to_temperature_(data_[DATA_BYTE8]);//Pipe-Out-Temperature: Byte8 in CMD20
+      
     }   
   }
   

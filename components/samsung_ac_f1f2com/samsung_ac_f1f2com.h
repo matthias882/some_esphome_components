@@ -56,6 +56,18 @@ class Samsung_AC_F1F2comComponent : public PollingComponent, public uart::UARTDe
   bool receiving_{false};
   uint8_t data_count_;
   uint32_t last_transmission_{0};
+
+  //Indoor unit 1
+  int8_t indoor1_room_temp_;
+  int8_t indoor1_set_temp_;
+  int8_t indoor1_pipe_in_temp_;
+  int8_t indoor1_pipe_out_temp_;
+  //Indoor unit 2
+  int8_t indoor2_room_temp_;
+  int8_t indoor2_set_temp_;
+  int8_t indoor2_pipe_in_temp_;
+  int8_t indoor2_pipe_out_temp_;
+
 };
 
 }  // namespace samsung_ac_f1f2com
