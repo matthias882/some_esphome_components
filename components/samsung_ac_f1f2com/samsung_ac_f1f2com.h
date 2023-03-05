@@ -17,15 +17,21 @@ class Samsung_AC_F1F2comComponent : public PollingComponent, public uart::UARTDe
   void set_indoor1_set_temp_sensor(sensor::Sensor *indoor1_set_temp_sensor) { indoor1_set_temp_sensor_ = indoor1_set_temp_sensor; }
   void set_indoor1_pipe_in_temp_sensor(sensor::Sensor *indoor1_pipe_in_temp_sensor) { indoor1_pipe_in_temp_sensor_ = indoor1_pipe_in_temp_sensor; }
   void set_indoor1_pipe_out_temp_sensor(sensor::Sensor *indoor1_pipe_out_temp_sensor) { indoor1_pipe_out_temp_sensor_ = indoor1_pipe_out_temp_sensor; }
+  void set_indoor1_fanspeed_sensor(sensor::Sensor *indoor1_fanspeed_sensor) { indoor1_fanspeed_sensor_ = indoor1_fanspeed_sensor; }
+  void set_indoor1_mode_sensor(sensor::Sensor *indoor1_mode_sensor) { indoor1_mode_sensor_ = indoor1_mode_sensor; }
 
   void set_indoor2_room_temp_sensor(sensor::Sensor *indoor2_room_temp_sensor) { indoor2_room_temp_sensor_ = indoor2_room_temp_sensor; }
   void set_indoor2_set_temp_sensor(sensor::Sensor *indoor2_set_temp_sensor) { indoor2_set_temp_sensor_ = indoor2_set_temp_sensor; }
   void set_indoor2_pipe_in_temp_sensor(sensor::Sensor *indoor2_pipe_in_temp_sensor) { indoor2_pipe_in_temp_sensor_ = indoor2_pipe_in_temp_sensor; }
   void set_indoor2_pipe_out_temp_sensor(sensor::Sensor *indoor2_pipe_out_temp_sensor) { indoor2_pipe_out_temp_sensor_ = indoor2_pipe_out_temp_sensor; }
+  void set_indoor2_fanspeed_sensor(sensor::Sensor *indoor2_fanspeed_sensor) { indoor2_fanspeed_sensor_ = indoor2_fanspeed_sensor; }
+  void set_indoor2_mode_sensor(sensor::Sensor *indoor2_mode_sensor) { indoor2_mode_sensor_ = indoor2_mode_sensor; }
 
   //BINARY SENSORS
-  void set_indoor1_operating_binary_sensor(binary_sensor::BinarySensor *indoor1_operating) { indoor1_operating_ = indoor1_operating; }
-  void set_indoor2_operating_binary_sensor(binary_sensor::BinarySensor *indoor2_operating) { indoor2_operating_ = indoor2_operating; }
+  void set_indoor1_operating_binary_sensor(binary_sensor::BinarySensor *indoor1_operating_binary_sensor) { indoor1_operating_binary_sensor_ = indoor1_operating_binary_sensor; }
+  void set_indoor1_bladeswing_binary_sensor(binary_sensor::BinarySensor *indoor1_bladeswing_binary_sensor) { indoor1_bladeswing_binary_sensor_ = indoor1_bladeswing_binary_sensor; }
+  void set_indoor2_operating_binary_sensor(binary_sensor::BinarySensor *indoor2_operating_binary_sensor) { indoor2_operating_binary_sensor_ = indoor2_operating_binary_sensor; }
+  void set_indoor2_bladeswing_binary_sensor(binary_sensor::BinarySensor *indoor2_bladeswing_binary_sensor) { indoor2_bladeswing_binary_sensor_ = indoor2_bladeswing_binary_sensor; }
  
   void setup() override;
   void update() override;
@@ -43,14 +49,20 @@ class Samsung_AC_F1F2comComponent : public PollingComponent, public uart::UARTDe
   sensor::Sensor *indoor1_set_temp_sensor_{nullptr};
   sensor::Sensor *indoor1_pipe_in_temp_sensor_{nullptr};
   sensor::Sensor *indoor1_pipe_out_temp_sensor_{nullptr};
+  sensor::Sensor *indoor1_fanspeed_sensor_{nullptr};
+  sensor::Sensor *indoor1_mode_sensor_{nullptr};
 
   sensor::Sensor *indoor2_room_temp_sensor_{nullptr};
   sensor::Sensor *indoor2_set_temp_sensor_{nullptr};
   sensor::Sensor *indoor2_pipe_in_temp_sensor_{nullptr};
   sensor::Sensor *indoor2_pipe_out_temp_sensor_{nullptr};
+  sensor::Sensor *indoor2_fanspeed_sensor_{nullptr};
+  sensor::Sensor *indoor2_mode_sensor_{nullptr};
 
-  binary_sensor::BinarySensor *indoor1_operating_{nullptr};
-  binary_sensor::BinarySensor *indoor2_operating_{nullptr};
+  binary_sensor::BinarySensor *indoor1_operating_binary_sensor_{nullptr};
+  binary_sensor::BinarySensor *indoor1_bladeswing_binary_sensor_{nullptr};
+  binary_sensor::BinarySensor *indoor2_operating_binary_sensor_{nullptr};
+  binary_sensor::BinarySensor *indoor2_bladeswing_binary_sensor_{nullptr};
  
   std::vector<uint8_t> data_;
   bool receiving_{false};
@@ -62,11 +74,20 @@ class Samsung_AC_F1F2comComponent : public PollingComponent, public uart::UARTDe
   int8_t indoor1_set_temp_;
   int8_t indoor1_pipe_in_temp_;
   int8_t indoor1_pipe_out_temp_;
+  uint8_t indoor1_fanspeed_;
+  uint8_t indoor1_mode_;
+  bool indoor1_bladeswing_;
+  bool indoor1_operation_;
+
   //Indoor unit 2
   int8_t indoor2_room_temp_;
   int8_t indoor2_set_temp_;
   int8_t indoor2_pipe_in_temp_;
   int8_t indoor2_pipe_out_temp_;
+  uint8_t indoor2_fanspeed_;
+  uint8_t indoor2_mode_;
+  bool indoor2_bladeswing_;
+  bool indoor2_operation_;
 
 };
 

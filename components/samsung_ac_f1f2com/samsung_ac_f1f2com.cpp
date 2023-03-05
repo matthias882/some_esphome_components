@@ -59,6 +59,14 @@ void Samsung_AC_F1F2comComponent::update() {
         this->indoor1_pipe_in_temp_sensor_->publish_state(indoor1_pipe_in_temp_);
   if (this->indoor1_pipe_out_temp_sensor_)
         this->indoor1_pipe_out_temp_sensor_->publish_state(indoor1_pipe_out_temp_);
+  if (this->indoor1_fanspeed_sensor_)
+        this->indoor1_fanspeed_sensor_->publish_state(indoor1_fanspeed_);
+  if (this->indoor1_mode_sensor_)
+        this->indoor1_mode_sensor_->publish_state(indoor1_mode_);
+  if (this->indoor1_bladeswing_binary_sensor_)
+        this->indoor1_bladeswing_binary_sensor_->publish_state(indoor1_bladeswing_);
+  if (this->indoor1_operating_binary_sensor_)
+        this->indoor1_operating_binary_sensor_->publish_state(indoor1_operation_);
   //publish values for indoor unit 2
   if (this->indoor2_set_temp_sensor_)
         this->indoor2_set_temp_sensor_->publish_state(indoor2_set_temp_);
@@ -68,6 +76,14 @@ void Samsung_AC_F1F2comComponent::update() {
         this->indoor2_pipe_in_temp_sensor_->publish_state(indoor2_pipe_in_temp_);
   if (this->indoor2_pipe_out_temp_sensor_)
         this->indoor2_pipe_out_temp_sensor_->publish_state(indoor2_pipe_out_temp_);
+  if (this->indoor2_fanspeed_sensor_)
+        this->indoor2_fanspeed_sensor_->publish_state(indoor2_fanspeed_);
+  if (this->indoor2_mode_sensor_)
+        this->indoor2_mode_sensor_->publish_state(indoor2_mode_);
+  if (this->indoor2_bladeswing_binary_sensor_)
+        this->indoor2_bladeswing_binary_sensor_->publish_state(indoor2_bladeswing_);
+  if (this->indoor2_operating_binary_sensor_)
+        this->indoor2_operating_binary_sensor_->publish_state(indoor2_operation_);
 }
 
 void Samsung_AC_F1F2comComponent::loop() {
@@ -129,9 +145,6 @@ bool Samsung_AC_F1F2comComponent::check_data_() const {
 }
   
 void Samsung_AC_F1F2comComponent::parse_data_() {
-  //uint16_t room_temp_1 = 33;
-  int8_t fanspeed, mode;
-  bool bladeswing, power;
   //uncomment next 4 lines to see all packages from indoor1 to outdoor1
   //if (data_[DATA_SRC] == ADDR_INDOOR_UNIT_1 && data_[DATA_DST] == ADDR_OUTDOOR_UNIT_1) { //data from indoor-unit 1 to outdoor-unit
   //  ESP_LOGD(TAG, "Raw: %02X %02x %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X",
@@ -145,28 +158,19 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
       //       data_[4], data_[5], data_[6], data_[7], data_[8], data_[9], data_[10], data_[11]);
       //temperatures
       indoor1_set_temp_ = byte_to_temperature_(data_[DATA_BYTE1]);//Set-Temperature: Byte1 in CMD20
-      
-
       indoor1_room_temp_ = byte_to_temperature_(data_[DATA_BYTE2]);//Room-Temperature: Byte2 in CMD20
-      
-
       indoor1_pipe_in_temp_ = byte_to_temperature_(data_[DATA_BYTE3]);//Pipe-In-Temperature: Byte3 in CMD20
-      
-
       indoor1_pipe_out_temp_ = byte_to_temperature_(data_[DATA_BYTE8]);//Pipe-Out-Temperature: Byte8 in CMD20
-      
-
       //fan
-      fanspeed = data_[DATA_BYTE4] & 0b00001111;// fanspeed: databyte4 Bit 3-0: 0=auto, 2=low, 4=medium, 5=hight
+      indoor1_fanspeed_ = data_[DATA_BYTE4] & 0b00001111;// fanspeed: databyte4 Bit 3-0: 0=auto, 2=low, 4=medium, 5=hight
       //swing
-      if ((data_[DATA_BYTE4] & 0b11110000) == 0xD0) bladeswing = true;// bladeswing: databyte4 Bit 7-4: 0=off, D=on
-      else bladeswing = false;
+      if ((data_[DATA_BYTE4] & 0b11110000) == 0xD0) indoor1_bladeswing_ = true;// bladeswing: databyte4 Bit 7-4: 0=off, D=on
+      else indoor1_bladeswing_ = false;
       //power on / off
-      if (data_[DATA_BYTE5] & 0b10000000) this->indoor1_operating_->publish_state(true); //bit7 = Power on/off
-      else this->indoor1_operating_->publish_state(false);
+      if (data_[DATA_BYTE5] & 0b10000000) indoor1_operation_ = true; //bit7 = Power on/off
+      else indoor1_operation_ = false;
       //mode
-      mode = data_[DATA_BYTE5] & 0b00111111;//mode: 0x01=heat, 0x02=cool, 0x04=dry, 0x08=fan, 0x22=auto
-      //ESP_LOGD(TAG, "Temperaturen unit1: Set:%d - Room:%d - Pipe in:%d - Pipe out:%d", indoor1_set_temp_sensor, indoor1_room_temp_sensor, indoor1_pipe_in_temp_sensor, indoor1_pipe_out_temp_sensor);
+      indoor1_mode_ = data_[DATA_BYTE5] & 0b00111111;//mode: 0x01=heat, 0x02=cool, 0x04=dry, 0x08=fan, 0x22=auto
     }   
   }
 
@@ -176,16 +180,19 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
       
       //temperatures
       indoor2_set_temp_ = byte_to_temperature_(data_[DATA_BYTE1]);//Set-Temperature: Byte1 in CMD20
-      
-
       indoor2_room_temp_ = byte_to_temperature_(data_[DATA_BYTE2]);//Room-Temperature: Byte2 in CMD20
-      
-      
       indoor2_pipe_in_temp_ = byte_to_temperature_(data_[DATA_BYTE3]);//Pipe-In-Temperature: Byte3 in CMD20
-      
-      
       indoor2_pipe_out_temp_ = byte_to_temperature_(data_[DATA_BYTE8]);//Pipe-Out-Temperature: Byte8 in CMD20
-      
+      //fan
+      indoor2_fanspeed_ = data_[DATA_BYTE4] & 0b00001111;// fanspeed: databyte4 Bit 3-0: 0=auto, 2=low, 4=medium, 5=hight
+      //swing
+      if ((data_[DATA_BYTE4] & 0b11110000) == 0xD0) indoor2_bladeswing_ = true;// bladeswing: databyte4 Bit 7-4: 0=off, D=on
+      else indoor2_bladeswing_ = false;
+      //power on / off
+      if (data_[DATA_BYTE5] & 0b10000000) indoor2_operation_ = true; //bit7 = Power on/off
+      else indoor2_operation_ = false;
+      //mode
+      indoor2_mode_ = data_[DATA_BYTE5] & 0b00111111;//mode: 0x01=heat, 0x02=cool, 0x04=dry, 0x08=fan, 0x22=auto
     }   
   }
   

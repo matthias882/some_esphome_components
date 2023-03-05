@@ -4,11 +4,15 @@ from esphome.components import binary_sensor
 from . import Samsung_AC_F1F2comComponent, CONF_SAMSUNG_AC_F1F2COM_ID
 
 CONF_INDOOR1_OPERATING = "indoor1_operating"
+CONF_INDOOR1_BLADESWING = "indoor1_bladeswing"
 CONF_INDOOR2_OPERATING = "indoor2_operating"
+CONF_INDOOR2_BLADESWING = "indoor2_bladeswing"
 
 TYPES = [
     CONF_INDOOR1_OPERATING,
+    CONF_INDOOR1_BLADESWING,
     CONF_INDOOR2_OPERATING,
+    CONF_INDOOR2_BLADESWING,
     
 ]
 
@@ -20,7 +24,13 @@ CONFIG_SCHEMA = cv.All(
                 CONF_INDOOR1_OPERATING
             ): binary_sensor.binary_sensor_schema(),
             cv.Optional(
+                CONF_INDOOR1_BLADESWING
+            ): binary_sensor.binary_sensor_schema(),
+            cv.Optional(
                 CONF_INDOOR2_OPERATING
+            ): binary_sensor.binary_sensor_schema(),
+            cv.Optional(
+                CONF_INDOOR2_BLADESWING
             ): binary_sensor.binary_sensor_schema(),
         }
     ).extend(cv.COMPONENT_SCHEMA)
