@@ -171,7 +171,7 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
       else indoor1_operation_ = false;
       //mode
       indoor1_mode_ = data_[DATA_BYTE5] & 0b00111111;//mode: 0x01=heat, 0x02=cool, 0x04=dry, 0x08=fan, 0x21=auto(heat), 0x22=auto(cool)
-      ESP_LOGD(TAG, "Byte5: %02x", data_[DATA_BYTE5]);
+      //ESP_LOGD(TAG, "Byte5: %02x", data_[DATA_BYTE5]);
     }   
   }
 
