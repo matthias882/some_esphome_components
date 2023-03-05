@@ -63,9 +63,9 @@ void Samsung_AC_F1F2comComponent::update() {
         this->indoor1_fanspeed_sensor_->publish_state(indoor1_fanspeed_);
   if (this->indoor1_mode_sensor_)
         this->indoor1_mode_sensor_->publish_state(indoor1_mode_);
-  //if (this->indoor1_bladeswing_binary_sensor_)
+  if (this->indoor1_bladeswing_binary_sensor_)
         this->indoor1_bladeswing_binary_sensor_->publish_state(indoor1_bladeswing_);
-  //if (this->indoor1_operating_binary_sensor_)
+  if (this->indoor1_operating_binary_sensor_)
         this->indoor1_operating_binary_sensor_->publish_state(indoor1_operation_);
   //publish values for indoor unit 2
   if (this->indoor2_set_temp_sensor_)
@@ -80,9 +80,9 @@ void Samsung_AC_F1F2comComponent::update() {
         this->indoor2_fanspeed_sensor_->publish_state(indoor2_fanspeed_);
   if (this->indoor2_mode_sensor_)
         this->indoor2_mode_sensor_->publish_state(indoor2_mode_);
-  //if (this->indoor2_bladeswing_binary_sensor_)
+  if (this->indoor2_bladeswing_binary_sensor_)
         this->indoor2_bladeswing_binary_sensor_->publish_state(indoor2_bladeswing_);
-  //if (this->indoor2_operating_binary_sensor_)
+  if (this->indoor2_operating_binary_sensor_)
         this->indoor2_operating_binary_sensor_->publish_state(indoor2_operation_);
 }
 
@@ -171,6 +171,7 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
       else indoor1_operation_ = false;
       //mode
       indoor1_mode_ = data_[DATA_BYTE5] & 0b00111111;//mode: 0x01=heat, 0x02=cool, 0x04=dry, 0x08=fan, 0x22=auto
+      ESP_LOGD(TAG, "Byte5: %02x", data_[DATA_BYTE5]);
     }   
   }
 
