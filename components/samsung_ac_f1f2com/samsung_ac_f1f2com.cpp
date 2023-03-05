@@ -125,8 +125,8 @@ void Samsung_AC_F1F2comComponent::loop() {
 float Samsung_AC_F1F2comComponent::get_setup_priority() const { return setup_priority::DATA; }
 
 bool Samsung_AC_F1F2comComponent::check_data_() const {
-  //ESP_LOGD(TAG, "Raw: %02X %02x %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X",
-  //         data_[0], data_[1], data_[2], data_[3], data_[4], data_[5], data_[6], data_[7], data_[8], data_[9], data_[10], data_[11], data_[12], data_[13]);  
+  ESP_LOGD(TAG, "Raw: %02X %02x %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X",
+           data_[0], data_[1], data_[2], data_[3], data_[4], data_[5], data_[6], data_[7], data_[8], data_[9], data_[10], data_[11], data_[12], data_[13]);  
   if (data_[0] != 0x32) {
     ESP_LOGW(TAG, "unexpected start byte (not 0x32): %d", data_[0]);
     return false;
@@ -162,7 +162,7 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
       indoor1_pipe_in_temp_ = byte_to_temperature_(data_[DATA_BYTE3]);//Pipe-In-Temperature: Byte3 in CMD20
       indoor1_pipe_out_temp_ = byte_to_temperature_(data_[DATA_BYTE8]);//Pipe-Out-Temperature: Byte8 in CMD20
       //fan
-      indoor1_fanspeed_ = data_[DATA_BYTE4] & 0b00001111;// fanspeed: databyte4 Bit 3-0: 0=auto, 2=low, 4=medium, 5=hight
+      indoor1_fanspeed_ = data_[DATA_BYTE4] & 0b00001111;// fanspeed: databyte4 Bit 3-0: 0=auto, 2=low, 4=medium, 5=hight, 6=fresh
       //swing
       if ((data_[DATA_BYTE4] & 0b11110000) == 0xD0) indoor1_bladeswing_ = true;// bladeswing: databyte4 Bit 7-4: 0=off, D=on
       else indoor1_bladeswing_ = false;
@@ -170,7 +170,7 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
       if (data_[DATA_BYTE5] & 0b10000000) indoor1_operation_ = true; //bit7 = Power on/off
       else indoor1_operation_ = false;
       //mode
-      indoor1_mode_ = data_[DATA_BYTE5] & 0b00111111;//mode: 0x01=heat, 0x02=cool, 0x04=dry, 0x08=fan, 0x22=auto
+      indoor1_mode_ = data_[DATA_BYTE5] & 0b00111111;//mode: 0x01=heat, 0x02=cool, 0x04=dry, 0x08=fan, 0x21=auto(heat), 0x22=auto(cool)
       ESP_LOGD(TAG, "Byte5: %02x", data_[DATA_BYTE5]);
     }   
   }
