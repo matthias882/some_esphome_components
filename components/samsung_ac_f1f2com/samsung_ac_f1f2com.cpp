@@ -63,9 +63,9 @@ void Samsung_AC_F1F2comComponent::update() {
         this->indoor1_fanspeed_sensor_->publish_state(indoor1_fanspeed_);
   if (this->indoor1_mode_sensor_)
         this->indoor1_mode_sensor_->publish_state(indoor1_mode_);
-  if (this->indoor1_bladeswing_binary_sensor_)
+  //if (this->indoor1_bladeswing_binary_sensor_)
         this->indoor1_bladeswing_binary_sensor_->publish_state(indoor1_bladeswing_);
-  if (this->indoor1_operating_binary_sensor_)
+  //if (this->indoor1_operating_binary_sensor_)
         this->indoor1_operating_binary_sensor_->publish_state(indoor1_operation_);
   //publish values for indoor unit 2
   if (this->indoor2_set_temp_sensor_)
@@ -80,9 +80,9 @@ void Samsung_AC_F1F2comComponent::update() {
         this->indoor2_fanspeed_sensor_->publish_state(indoor2_fanspeed_);
   if (this->indoor2_mode_sensor_)
         this->indoor2_mode_sensor_->publish_state(indoor2_mode_);
-  if (this->indoor2_bladeswing_binary_sensor_)
+  //if (this->indoor2_bladeswing_binary_sensor_)
         this->indoor2_bladeswing_binary_sensor_->publish_state(indoor2_bladeswing_);
-  if (this->indoor2_operating_binary_sensor_)
+  //if (this->indoor2_operating_binary_sensor_)
         this->indoor2_operating_binary_sensor_->publish_state(indoor2_operation_);
 }
 
