@@ -14,7 +14,7 @@ Samsung_AC_F1F2comComponent = samsung_ac_f1f2com.class_(
     "Samsung_AC_F1F2comComponent", cg.PollingComponent, uart.UARTDevice
 )
 
-CONF_DATALINE_DEBUG = "dataline debug"
+CONF_DATALINE_DEBUG = "dataline_debug"
 
 CONFIG_SCHEMA = (
     cv.Schema(
