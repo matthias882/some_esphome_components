@@ -46,6 +46,7 @@ void Samsung_AC_F1F2comComponent::setup() {}
 
 void Samsung_AC_F1F2comComponent::dump_config(){
   ESP_LOGCONFIG(TAG, "Samsung_AC_F1F2com:");
+  ESP_LOGCONFIG(TAG, "dataline debug enabled?: %s", this->dataline_debug_ ? "true" : "false");
   this->check_uart_settings(2400, 1, esphome::uart::UART_CONFIG_PARITY_EVEN, 8);
 }
 
@@ -135,8 +136,11 @@ void Samsung_AC_F1F2comComponent::loop() {
 float Samsung_AC_F1F2comComponent::get_setup_priority() const { return setup_priority::DATA; }
 
 bool Samsung_AC_F1F2comComponent::check_data_() const {
-  ESP_LOGD(TAG, "Raw: %02X %02x %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %d",
-           data_[0], data_[1], data_[2], data_[3], data_[4], data_[5], data_[6], data_[7], data_[8], data_[9], data_[10], data_[11], data_[12], data_[13], millis());  
+  if (dataline_debug_ == true) {
+    //print all communication packages when dataline debug is set true
+    ESP_LOGD(TAG, "%d: %02X %02x %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X",
+             millis(), data_[0], data_[1], data_[2], data_[3], data_[4], data_[5], data_[6], data_[7], data_[8], data_[9], data_[10], data_[11], data_[12], data_[13]);
+  }
   if (data_[0] != 0x32) {
     ESP_LOGW(TAG, "unexpected start byte (not 0x32): %d", data_[0]);
     return false;
@@ -150,7 +154,7 @@ bool Samsung_AC_F1F2comComponent::check_data_() const {
   bool result = false;
   if (crc == data_[12]) result = true;
   if (!result)
-    ESP_LOGW(TAG, "data checksum failed: %02x != %02x", crc, data_[12]);
+    ESP_LOGW(TAG, "data checksum failed! calculated: %02x but received: %02x", crc, data_[12]);
   return result;
 }
   
