@@ -52,38 +52,47 @@ void Samsung_AC_F1F2comComponent::dump_config(){
 void Samsung_AC_F1F2comComponent::update() {
   //publish values for indoor unit 1
   if (this->indoor1_set_temp_sensor_)
-        this->indoor1_set_temp_sensor_->publish_state(indoor1_set_temp_);
+    this->indoor1_set_temp_sensor_->publish_state(indoor1_set_temp_);
   if (this->indoor1_room_temp_sensor_)
-        this->indoor1_room_temp_sensor_->publish_state(indoor1_room_temp_);
+    this->indoor1_room_temp_sensor_->publish_state(indoor1_room_temp_);
   if (this->indoor1_pipe_in_temp_sensor_)
-        this->indoor1_pipe_in_temp_sensor_->publish_state(indoor1_pipe_in_temp_);
+    this->indoor1_pipe_in_temp_sensor_->publish_state(indoor1_pipe_in_temp_);
   if (this->indoor1_pipe_out_temp_sensor_)
-        this->indoor1_pipe_out_temp_sensor_->publish_state(indoor1_pipe_out_temp_);
+    this->indoor1_pipe_out_temp_sensor_->publish_state(indoor1_pipe_out_temp_);
   if (this->indoor1_fanspeed_sensor_)
-        this->indoor1_fanspeed_sensor_->publish_state(indoor1_fanspeed_);
+    this->indoor1_fanspeed_sensor_->publish_state(indoor1_fanspeed_);
   if (this->indoor1_mode_sensor_)
-        this->indoor1_mode_sensor_->publish_state(indoor1_mode_);
+    this->indoor1_mode_sensor_->publish_state(indoor1_mode_);
+  if (this->indoor1_capacity_sensor_)
+    this->indoor1_capacity_sensor_->publish_state(indoor1_capacity_);
+  if (this->indoor1_delta_q_sensor_)
+    this->indoor1_delta_q_sensor_->publish_state(indoor1_delta_q_);
   if (this->indoor1_bladeswing_binary_sensor_)
-        this->indoor1_bladeswing_binary_sensor_->publish_state(indoor1_bladeswing_);
+    this->indoor1_bladeswing_binary_sensor_->publish_state(indoor1_bladeswing_);
   if (this->indoor1_operating_binary_sensor_)
-        this->indoor1_operating_binary_sensor_->publish_state(indoor1_operation_);
+    this->indoor1_operating_binary_sensor_->publish_state(indoor1_operation_);
+  
   //publish values for indoor unit 2
   if (this->indoor2_set_temp_sensor_)
-        this->indoor2_set_temp_sensor_->publish_state(indoor2_set_temp_);
+    this->indoor2_set_temp_sensor_->publish_state(indoor2_set_temp_);
   if (this->indoor2_room_temp_sensor_)
-        this->indoor2_room_temp_sensor_->publish_state(indoor2_room_temp_);
+    this->indoor2_room_temp_sensor_->publish_state(indoor2_room_temp_);
   if (this->indoor2_pipe_in_temp_sensor_)
-        this->indoor2_pipe_in_temp_sensor_->publish_state(indoor2_pipe_in_temp_);
+    this->indoor2_pipe_in_temp_sensor_->publish_state(indoor2_pipe_in_temp_);
   if (this->indoor2_pipe_out_temp_sensor_)
-        this->indoor2_pipe_out_temp_sensor_->publish_state(indoor2_pipe_out_temp_);
+    this->indoor2_pipe_out_temp_sensor_->publish_state(indoor2_pipe_out_temp_);
   if (this->indoor2_fanspeed_sensor_)
-        this->indoor2_fanspeed_sensor_->publish_state(indoor2_fanspeed_);
+    this->indoor2_fanspeed_sensor_->publish_state(indoor2_fanspeed_);
   if (this->indoor2_mode_sensor_)
-        this->indoor2_mode_sensor_->publish_state(indoor2_mode_);
+    this->indoor2_mode_sensor_->publish_state(indoor2_mode_);
+  if (this->indoor2_capacity_sensor_)
+    this->indoor2_capacity_sensor_->publish_state(indoor2_capacity_);
+  if (this->indoor2_delta_q_sensor_)
+    this->indoor2_delta_q_sensor_->publish_state(indoor2_delta_q_);
   if (this->indoor2_bladeswing_binary_sensor_)
-        this->indoor2_bladeswing_binary_sensor_->publish_state(indoor2_bladeswing_);
+    this->indoor2_bladeswing_binary_sensor_->publish_state(indoor2_bladeswing_);
   if (this->indoor2_operating_binary_sensor_)
-        this->indoor2_operating_binary_sensor_->publish_state(indoor2_operation_);
+    this->indoor2_operating_binary_sensor_->publish_state(indoor2_operation_);
 }
 
 void Samsung_AC_F1F2comComponent::loop() {
@@ -154,9 +163,8 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
 
   //data from indoor-unit 1 to outdoor-unit
   if (data_[DATA_SRC] == ADDR_INDOOR_UNIT_1 && data_[DATA_DST] == ADDR_OUTDOOR_UNIT_1) {
+    //CMD 0x20
     if (data_[DATA_CMD] == 0x20) {
-      //ESP_LOGD(TAG, "Raw data i1->o1 cmd20: %02X %02x %02X %02X %02X %02X %02X %02X",
-      //       data_[4], data_[5], data_[6], data_[7], data_[8], data_[9], data_[10], data_[11]);
       //temperatures
       indoor1_set_temp_ = byte_to_temperature_(data_[DATA_BYTE1]);//Set-Temperature: Byte1 in CMD20
       indoor1_room_temp_ = byte_to_temperature_(data_[DATA_BYTE2]);//Room-Temperature: Byte2 in CMD20
@@ -172,14 +180,20 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
       else indoor1_operation_ = false;
       //mode
       indoor1_mode_ = data_[DATA_BYTE5] & 0b00111111;//mode: 0x01=heat, 0x02=cool, 0x04=dry, 0x08=fan, 0x21=auto(heat), 0x22=auto(cool)
-      //ESP_LOGD(TAG, "Byte5: %02x", data_[DATA_BYTE5]);
-    }   
+    }
+    //CMD 0x21
+    else if (data_[DATA_CMD] == 0x21) {
+      //Capacity of indoor unit (byte 6)
+      indoor1_capacity_ = data_[DATA_BYTE6] / 10;
+      //delta q of indoor unit (byte 8)
+      indoor1_delta_q_ = data_[DATA_BYTE8];
+    }
   }
 
   //data from indoor-unit 1 to outdoor-unit
-  if (data_[DATA_SRC] == ADDR_INDOOR_UNIT_2 && data_[DATA_DST] == ADDR_OUTDOOR_UNIT_1) {
+  else if (data_[DATA_SRC] == ADDR_INDOOR_UNIT_2 && data_[DATA_DST] == ADDR_OUTDOOR_UNIT_1) {
+    //CMD 0x20  
     if (data_[DATA_CMD] == 0x20) {
-      
       //temperatures
       indoor2_set_temp_ = byte_to_temperature_(data_[DATA_BYTE1]);//Set-Temperature: Byte1 in CMD20
       indoor2_room_temp_ = byte_to_temperature_(data_[DATA_BYTE2]);//Room-Temperature: Byte2 in CMD20
@@ -195,11 +209,15 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
       else indoor2_operation_ = false;
       //mode
       indoor2_mode_ = data_[DATA_BYTE5] & 0b00111111;//mode: 0x01=heat, 0x02=cool, 0x04=dry, 0x08=fan, 0x22=auto
-    }   
+    }
+    //CMD 0x21
+    else if (data_[DATA_CMD] == 0x21) {
+      //Capacity of indoor unit (byte 6)
+      indoor2_capacity_ = data_[DATA_BYTE6] / 10;
+      //delta q of indoor unit (byte 8)
+      indoor2_delta_q_ = data_[DATA_BYTE8];
+    }
   }
-  
-  //ESP_LOGD(TAG, "Raw: %02X %02x %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X",
-  //         data_[0], data_[1], data_[2], data_[3], data_[4], data_[5], data_[6], data_[7], data_[8], data_[9], data_[10], data_[11], data_[12], data_[13]);
 }
 
 int8_t Samsung_AC_F1F2comComponent::byte_to_temperature_(uint8_t databyte) {
