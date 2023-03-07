@@ -188,7 +188,7 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
     //CMD 0x40
     else if (data_[DATA_CMD] == 0x40) {
       //Capacity of indoor unit (byte 6)
-      indoor1_capacity_ = data_[DATA_BYTE6] / 10;
+      indoor1_capacity_ = float(data_[DATA_BYTE6]) / 10;
       //delta q of indoor unit (byte 8)
       indoor1_delta_q_ = data_[DATA_BYTE8];
     }
@@ -217,7 +217,7 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
     //CMD 0x40
     else if (data_[DATA_CMD] == 0x40) {
       //Capacity of indoor unit (byte 6)
-      indoor2_capacity_ = data_[DATA_BYTE6] / 10;
+      indoor2_capacity_ = float(data_[DATA_BYTE6]) / 10;
       //delta q of indoor unit (byte 8)
       indoor2_delta_q_ = data_[DATA_BYTE8];
     }
