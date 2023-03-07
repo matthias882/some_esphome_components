@@ -13,11 +13,12 @@ In my setup the esp8266-controller ist placed in one of the indoor-units. You ca
 
 ## My tested setup:
 ### Climate-devices
-Outdoor-unit:   MH070FXEA4A
-2x indoor-unit: MH035FPEA
+- Outdoor-unit: MH070FXEA4A
+- 2x indoor-unit: MH035FPEA
 
-### Controller: WEMOS D1 mini
-RS485 <-> TTL converter (3.3V)
+### Hardware:
+- WEMOS D1 mini
+- RS485 <-> TTL converter (3.3V)
 
 ### Connections between RS485-converter and Bus:
 - RS485-A-line <-> F1
