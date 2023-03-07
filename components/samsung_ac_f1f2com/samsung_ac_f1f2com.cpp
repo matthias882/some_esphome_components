@@ -185,8 +185,8 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
       //mode
       indoor1_mode_ = data_[DATA_BYTE5] & 0b00111111;//mode: 0x01=heat, 0x02=cool, 0x04=dry, 0x08=fan, 0x21=auto(heat), 0x22=auto(cool)
     }
-    //CMD 0x21
-    else if (data_[DATA_CMD] == 0x21) {
+    //CMD 0x40
+    else if (data_[DATA_CMD] == 0x40) {
       //Capacity of indoor unit (byte 6)
       indoor1_capacity_ = data_[DATA_BYTE6] / 10;
       //delta q of indoor unit (byte 8)
@@ -214,8 +214,8 @@ void Samsung_AC_F1F2comComponent::parse_data_() {
       //mode
       indoor2_mode_ = data_[DATA_BYTE5] & 0b00111111;//mode: 0x01=heat, 0x02=cool, 0x04=dry, 0x08=fan, 0x22=auto
     }
-    //CMD 0x21
-    else if (data_[DATA_CMD] == 0x21) {
+    //CMD 0x40
+    else if (data_[DATA_CMD] == 0x40) {
       //Capacity of indoor unit (byte 6)
       indoor2_capacity_ = data_[DATA_BYTE6] / 10;
       //delta q of indoor unit (byte 8)
