@@ -6,7 +6,7 @@ from esphome.const import (
     DEVICE_CLASS_TEMPERATURE,
     STATE_CLASS_MEASUREMENT,
     UNIT_CELSIUS,
-    UNIT_KILOWATT
+    UNIT_KILOWATT,
     ICON_THERMOMETER,
 )
 from . import Samsung_AC_F1F2comComponent, CONF_SAMSUNG_AC_F1F2COM_ID
@@ -88,6 +88,10 @@ CONFIG_SCHEMA = cv.All(
                 accuracy_decimals=1,
                 state_class=STATE_CLASS_MEASUREMENT,
             ),
+            cv.Optional(CONF_INDOOR1_DELTA_Q): sensor.sensor_schema(
+                accuracy_decimals=0,
+                state_class=STATE_CLASS_MEASUREMENT,
+            ),
             cv.Optional(CONF_INDOOR2_ROOM_TEMP): sensor.sensor_schema(
                 unit_of_measurement=UNIT_CELSIUS,
                 icon=ICON_THERMOMETER,
@@ -118,6 +122,15 @@ CONFIG_SCHEMA = cv.All(
             ),
             cv.Optional(CONF_INDOOR2_FANSPEED): sensor.sensor_schema(),
             cv.Optional(CONF_INDOOR2_MODE): sensor.sensor_schema(),
+            cv.Optional(CONF_INDOOR2_CAPACITY): sensor.sensor_schema(
+                unit_of_measurement=UNIT_KILOWATT,
+                accuracy_decimals=1,
+                state_class=STATE_CLASS_MEASUREMENT,
+            ),
+            cv.Optional(CONF_INDOOR2_DELTA_Q): sensor.sensor_schema(
+                accuracy_decimals=0,
+                state_class=STATE_CLASS_MEASUREMENT,
+            ),
         }
     ).extend(cv.COMPONENT_SCHEMA)
 )
