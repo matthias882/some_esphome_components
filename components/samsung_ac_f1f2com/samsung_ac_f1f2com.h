@@ -42,7 +42,7 @@ class Samsung_AC_F1F2comComponent : public PollingComponent, public uart::UARTDe
   void loop() override;
   void dump_config() override;
 
-  void set_dataline_debug(bool dataline_debug) { dataline_debug_ = dataline_debug; }
+  void set_dataline_debug(bool dataline_debug) { dataline_debug_ = dataline_debug; };
  
  float get_setup_priority() const override;
  
@@ -79,7 +79,7 @@ class Samsung_AC_F1F2comComponent : public PollingComponent, public uart::UARTDe
   uint32_t last_transmission_{0};
 
   //settings from yaml
-  bool dataline_debug_{false}
+  bool dataline_debug_{false};
 
   //Indoor unit 1
   int8_t indoor1_room_temp_;
