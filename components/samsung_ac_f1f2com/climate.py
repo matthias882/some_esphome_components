@@ -17,4 +17,4 @@ CONFIG_SCHEMA = climate.CLIMATE_SCHEMA.extend(
 
 async def to_code(config):
     var = cg.new_Pvariable(config[CONF_ID])
-    await climate_ir.register_climate_ir(var, config)    
+    await climate.register_climate(var, config)    
