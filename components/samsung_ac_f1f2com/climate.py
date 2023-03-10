@@ -1,9 +1,6 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.components import climate
-from esphome.const import (
-    CONF_ID,
-)
 
 AUTO_LOAD = ["climate"]
 
@@ -14,7 +11,3 @@ CONFIG_SCHEMA = climate.CLIMATE_SCHEMA.extend(
         cv.GenerateID(CONF_SAMSUNG_AC_F1F2COM_ID): cv.use_id(Samsung_AC_F1F2comComponent),
     }
 )
-
-async def to_code(config):
-    var = cg.new_Pvariable(config[CONF_SAMSUNG_AC_F1F2COM_ID])
-    await climate.register_climate(var, config)    
