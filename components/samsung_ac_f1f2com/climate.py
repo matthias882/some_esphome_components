@@ -8,16 +8,13 @@ from esphome.const import (
 )
 import esphome.codegen as cg
 import esphome.config_validation as cv
-from esphome.components import climate, select, switch
+from esphome.components import climate, select
 
 from . import Samsung_AC_F1F2comComponent, CONF_SAMSUNG_AC_F1F2COM_ID
 
-AUTO_LOAD = ["switch", "sensor", "select"]
+AUTO_LOAD = ["sensor", "select"]
 DEPENDENCIES = ["uart"]
 
-Samsung_AC_F1F2comSwitch = samsung_ac_f1f2com.class_(
-    "Samsung_AC_F1F2comSwitch", switch.Switch, cg.Component
-)
 Samsung_AC_F1F2comSelect = samsung_ac_f1f2com.class_(
     "Samsung_AC_F1F2comSelect", select.Select, cg.Component
 )
@@ -29,9 +26,6 @@ CONF_CURRENT_POWER_CONSUMPTION = "current_power_consumption"
 
 VERTICAL_SWING_OPTIONS = ["on", "off"]
 
-SWITCH_SCHEMA = switch.SWITCH_SCHEMA.extend(cv.COMPONENT_SCHEMA).extend(
-    {cv.GenerateID(CONF_SAMSUNG_AC_F1F2COM_ID): cv.declare_id(Samsung_AC_F1F2comSwitch)}
-)
 SELECT_SCHEMA = select.SELECT_SCHEMA.extend(
     {cv.GenerateID(CONF_SAMSUNG_AC_F1F2COM_ID): cv.declare_id(Samsung_AC_F1F2comSelect)}
 )
