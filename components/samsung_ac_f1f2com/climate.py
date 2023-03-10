@@ -15,6 +15,4 @@ from . import Samsung_AC_F1F2comComponent, CONF_SAMSUNG_AC_F1F2COM_ID
 AUTO_LOAD = ["sensor", "select"]
 DEPENDENCIES = ["uart"]
 
-
-async def to_code(config):
     
