@@ -145,7 +145,7 @@ bool Samsung_AC_F1F2comComponent::check_data_() const {
     ESP_LOGW(TAG, "unexpected start byte (not 0x32): %d", data_[0]);
     return false;
   }
-  //crc berechnen: xor data_[1] bis data_[11]
+  //calculate crc: xor data_[1] to data_[11]
   int i;
   uint8_t crc = data_[1];
   for (i = 2; i <= 11; i++) {
@@ -159,12 +159,6 @@ bool Samsung_AC_F1F2comComponent::check_data_() const {
 }
   
 void Samsung_AC_F1F2comComponent::parse_data_() {
-  //uncomment next 4 lines to see all packages from indoor1 to outdoor1
-  //if (data_[DATA_SRC] == ADDR_INDOOR_UNIT_1 && data_[DATA_DST] == ADDR_OUTDOOR_UNIT_1) { //data from indoor-unit 1 to outdoor-unit
-  //  ESP_LOGD(TAG, "Raw: %02X %02x %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X",
-  //           data_[0], data_[1], data_[2], data_[3], data_[4], data_[5], data_[6], data_[7], data_[8], data_[9], data_[10], data_[11], data_[12], data_[13]);
-  //}
-
   //data from indoor-unit 1 to outdoor-unit
   if (data_[DATA_SRC] == ADDR_INDOOR_UNIT_1 && data_[DATA_DST] == ADDR_OUTDOOR_UNIT_1) {
     //CMD 0x20
