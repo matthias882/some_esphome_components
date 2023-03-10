@@ -16,5 +16,5 @@ CONFIG_SCHEMA = climate.CLIMATE_SCHEMA.extend(
 )
 
 async def to_code(config):
-    var = cg.new_Pvariable(config[CONF_ID])
+    var = cg.new_Pvariable(config[CONF_SAMSUNG_AC_F1F2COM_ID])
     await climate.register_climate(var, config)    
