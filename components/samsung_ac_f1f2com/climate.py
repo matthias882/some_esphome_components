@@ -20,9 +20,7 @@ Samsung_AC_F1F2comSelect = samsung_ac_f1f2com.class_(
 )
 
 CONF_VERTICAL_SWING_SELECT = "vertical_swing_select"
-CONF_OUTSIDE_TEMPERATURE = "outside_temperature"
 CONF_CURRENT_TEMPERATURE_SENSOR = "current_temperature_sensor"
-CONF_CURRENT_POWER_CONSUMPTION = "current_power_consumption"
 
 VERTICAL_SWING_OPTIONS = ["on", "off"]
 
