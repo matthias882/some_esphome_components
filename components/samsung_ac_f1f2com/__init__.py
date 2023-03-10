@@ -24,6 +24,7 @@ CONFIG_SCHEMA = (
         }
     )
     .extend(uart.UART_DEVICE_SCHEMA)
+    .extend(climate.CLIMATE_SCHEMA)
     .extend(cv.polling_component_schema("30s"))
 )
 
