@@ -41,34 +41,34 @@ Samsung_AC_F1F2comComponent = samsung_ac_f1f2com_ns.class_("Samsung_AC_F1F2comCo
 #Capabilities = samsung_ac_f1f2com_ns.namespace("Constants")
 
 
-ALLOWED_CLIMATE_MODES = {
-    "HEAT_COOL": ClimateMode.CLIMATE_MODE_HEAT_COOL,
-    "COOL": ClimateMode.CLIMATE_MODE_COOL,
-    "HEAT": ClimateMode.CLIMATE_MODE_HEAT,
-    "DRY": ClimateMode.CLIMATE_MODE_DRY,
-    "FAN_ONLY": ClimateMode.CLIMATE_MODE_FAN_ONLY,
-}
+#ALLOWED_CLIMATE_MODES = {
+#    "HEAT_COOL": ClimateMode.CLIMATE_MODE_HEAT_COOL,
+#    "COOL": ClimateMode.CLIMATE_MODE_COOL,
+#    "HEAT": ClimateMode.CLIMATE_MODE_HEAT,
+#    "DRY": ClimateMode.CLIMATE_MODE_DRY,
+#    "FAN_ONLY": ClimateMode.CLIMATE_MODE_FAN_ONLY,
+#}
 
-ALLOWED_CLIMATE_SWING_MODES = {
-    "VERTICAL": ClimateSwingMode.CLIMATE_SWING_VERTICAL,
-}
+#ALLOWED_CLIMATE_SWING_MODES = {
+#    "VERTICAL": ClimateSwingMode.CLIMATE_SWING_VERTICAL,
+#}
 
 #CUSTOM_FAN_MODES = {
 #    "TURBO": Capabilities.TURBO,
 #}
 
-validate_modes = cv.enum(ALLOWED_CLIMATE_MODES, upper=True)
-validate_swing_modes = cv.enum(ALLOWED_CLIMATE_SWING_MODES, upper=True)
+#validate_modes = cv.enum(ALLOWED_CLIMATE_MODES, upper=True)
+#validate_swing_modes = cv.enum(ALLOWED_CLIMATE_SWING_MODES, upper=True)
 #validate_custom_fan_modes = cv.enum(CUSTOM_FAN_MODES, upper=True)
 
 CONFIG_SCHEMA = cv.All(
     climate.CLIMATE_SCHEMA.extend(
         {
             cv.GenerateID(): cv.declare_id(Samsung_AC_F1F2comComponent),
-            cv.Optional(CONF_SUPPORTED_MODES): cv.ensure_list(validate_modes),
-            cv.Optional(CONF_SUPPORTED_SWING_MODES): cv.ensure_list(
-                validate_swing_modes
-            ),
+            #cv.Optional(CONF_SUPPORTED_MODES): cv.ensure_list(validate_modes),
+            #cv.Optional(CONF_SUPPORTED_SWING_MODES): cv.ensure_list(
+            #    validate_swing_modes
+            #),
             #cv.Optional(CONF_CUSTOM_FAN_MODES): cv.ensure_list(
             #    validate_custom_fan_modes
             #),
@@ -76,7 +76,7 @@ CONFIG_SCHEMA = cv.All(
     )
     .extend(uart.UART_DEVICE_SCHEMA)
     .extend(cv.COMPONENT_SCHEMA),
-    cv.only_with_arduino,
+    #cv.only_with_arduino,
 )
 
 async def to_code(config):
@@ -84,9 +84,9 @@ async def to_code(config):
     await cg.register_component(var, config)
     await uart.register_uart_device(var, config)
     await climate.register_climate(var, config)
-    if CONF_SUPPORTED_MODES in config:
-        cg.add(var.set_supported_modes(config[CONF_SUPPORTED_MODES]))
-    if CONF_SUPPORTED_SWING_MODES in config:
-        cg.add(var.set_supported_swing_modes(config[CONF_SUPPORTED_SWING_MODES]))
+    #if CONF_SUPPORTED_MODES in config:
+    #    cg.add(var.set_supported_modes(config[CONF_SUPPORTED_MODES]))
+    #if CONF_SUPPORTED_SWING_MODES in config:
+    #    cg.add(var.set_supported_swing_modes(config[CONF_SUPPORTED_SWING_MODES]))
     #if CONF_CUSTOM_FAN_MODES in config:
     #    cg.add(var.set_custom_fan_modes(config[CONF_CUSTOM_FAN_MODES]))
