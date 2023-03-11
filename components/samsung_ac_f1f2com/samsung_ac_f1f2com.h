@@ -9,7 +9,7 @@
 namespace esphome {
 namespace samsung_ac_f1f2com {
 
-class Samsung_AC_F1F2comComponent : public PollingComponent, public uart::UARTDevice, public climate::Climate {
+class Samsung_AC_F1F2comComponent : public climate::Climate, public uart::UARTDevice, public PollingComponent {
  public:
  Samsung_AC_F1F2comComponent() = default;
 
@@ -48,6 +48,10 @@ class Samsung_AC_F1F2comComponent : public PollingComponent, public uart::UARTDe
  float get_setup_priority() const override;
  
  protected:
+ /// Override control to change settings of the climate device.
+  void control(const climate::ClimateCall &call) override;
+  /// Return the traits of this controller.
+  climate::ClimateTraits traits() override;
   bool check_data_() const;
   void parse_data_();
   int8_t byte_to_temperature_(uint8_t databyte);
