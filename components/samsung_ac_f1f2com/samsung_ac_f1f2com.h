@@ -8,7 +8,7 @@
 namespace esphome {
 namespace samsung_ac_f1f2com {
 
-class Samsung_AC_F1F2comComponent : public PollingComponent, public uart::UARTDevice {
+class Samsung_AC_F1F2comComponent : public PollingComponent, public uart::UARTDevice, public climate::Climate {
  public:
  Samsung_AC_F1F2comComponent() = default;
 
