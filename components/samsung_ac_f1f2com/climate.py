@@ -69,9 +69,9 @@ CONFIG_SCHEMA = cv.All(
             cv.Optional(CONF_SUPPORTED_SWING_MODES): cv.ensure_list(
                 validate_swing_modes
             ),
-            cv.Optional(CONF_CUSTOM_FAN_MODES): cv.ensure_list(
-                validate_custom_fan_modes
-            ),
+            #cv.Optional(CONF_CUSTOM_FAN_MODES): cv.ensure_list(
+            #    validate_custom_fan_modes
+            #),
         }
     )
     .extend(uart.UART_DEVICE_SCHEMA)
@@ -88,5 +88,5 @@ async def to_code(config):
         cg.add(var.set_supported_modes(config[CONF_SUPPORTED_MODES]))
     if CONF_SUPPORTED_SWING_MODES in config:
         cg.add(var.set_supported_swing_modes(config[CONF_SUPPORTED_SWING_MODES]))
-    if CONF_CUSTOM_FAN_MODES in config:
-        cg.add(var.set_custom_fan_modes(config[CONF_CUSTOM_FAN_MODES]))
+    #if CONF_CUSTOM_FAN_MODES in config:
+    #    cg.add(var.set_custom_fan_modes(config[CONF_CUSTOM_FAN_MODES]))
