@@ -1,4 +1,5 @@
-from esphome.components import climate, sensor, binary_sensor, uart
+#from esphome.components import climate, sensor, binary_sensor, uart
+from esphome.components import climate
 import esphome.config_validation as cv
 import esphome.codegen as cg
 from esphome.const import (
@@ -74,7 +75,7 @@ CONFIG_SCHEMA = cv.All(
             #),
         }
     )
-    .extend(uart.UART_DEVICE_SCHEMA)
+    #.extend(uart.UART_DEVICE_SCHEMA)
     .extend(cv.COMPONENT_SCHEMA),
     #cv.only_with_arduino,
 )
@@ -82,7 +83,7 @@ CONFIG_SCHEMA = cv.All(
 async def to_code(config):
     var = cg.new_Pvariable(config[CONF_ID])
     await cg.register_component(var, config)
-    await uart.register_uart_device(var, config)
+    #await uart.register_uart_device(var, config)
     await climate.register_climate(var, config)
     #if CONF_SUPPORTED_MODES in config:
     #    cg.add(var.set_supported_modes(config[CONF_SUPPORTED_MODES]))
