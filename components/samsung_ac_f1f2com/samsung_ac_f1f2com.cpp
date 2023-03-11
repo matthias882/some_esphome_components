@@ -62,8 +62,8 @@ void Samsung_AC_F1F2comComponent::control(const climate::ClimateCall &call) {
   //if (call.get_target_temperature().has_value())
   //  this->target_temperature = *call.get_target_temperature();
 
-  this->transmit_state_();
-  this->publish_state();
+  //this->transmit_state_();
+  //this->publish_state();
 }
 
 
