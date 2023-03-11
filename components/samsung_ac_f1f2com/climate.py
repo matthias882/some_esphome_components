@@ -69,7 +69,7 @@ YashimaClimate = samsung_ac_f1f2com_ns.class_('YashimaClimate', climate.Climate,
 CONFIG_SCHEMA = cv.All(
     climate.CLIMATE_SCHEMA.extend(
         {
-            cv.GenerateID(): cv.declare_id(AirConditioner),
+            cv.GenerateID(): cv.declare_id(YashimaClimate),
             #cv.Optional(CONF_SUPPORTED_MODES): cv.ensure_list(validate_modes),
             #cv.Optional(CONF_SUPPORTED_SWING_MODES): cv.ensure_list(
             #    validate_swing_modes
