@@ -37,7 +37,7 @@ AUTO_LOAD = ["sensor"]
 CONF_SAMSUNG_AC_F1F2COM_ID = "samsung_ac_f1f2com_id"
 
 samsung_ac_f1f2com = cg.esphome_ns.namespace("samsung_ac_f1f2com").namespace("ac")
-Samsung_AC_F1F2comComponent = samsung_ac_f1f2com.class_("Samsung_AC_F1F2comComponent", cg.Component, uart.UARTDevice, climate.Climate)
+AirConditioner  = samsung_ac_f1f2com.class_("AirConditioner", cg.Component, uart.UARTDevice, climate.Climate)
 Capabilities = samsung_ac_f1f2com.namespace("Constants")
 
 
@@ -64,7 +64,7 @@ validate_custom_fan_modes = cv.enum(CUSTOM_FAN_MODES, upper=True)
 CONFIG_SCHEMA = cv.All(
     climate.CLIMATE_SCHEMA.extend(
         {
-            cv.GenerateID(): cv.declare_id(Samsung_AC_F1F2comComponent),
+            cv.GenerateID(): cv.declare_id(AirConditioner),
             cv.Optional(CONF_SUPPORTED_MODES): cv.ensure_list(validate_modes),
             cv.Optional(CONF_SUPPORTED_SWING_MODES): cv.ensure_list(
                 validate_swing_modes
