@@ -37,7 +37,7 @@ AUTO_LOAD = ["sensor"]
 #CONF_SAMSUNG_AC_F1F2COM_ID = "samsung_ac_f1f2com_id"
 
 samsung_ac_f1f2com_ns = cg.esphome_ns.namespace("samsung_ac_f1f2com")
-AirConditioner = samsung_ac_f1f2com_ns.class_("AirConditioner", cg.Component, uart.UARTDevice, climate.Climate)
+AirConditioner = samsung_ac_f1f2com_ns.class_("AirConditioner", cg.Component, climate.Climate)
 #Capabilities = samsung_ac_f1f2com_ns.namespace("Constants")
 
 
