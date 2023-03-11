@@ -66,7 +66,7 @@ Samsung_AC_F1F2comComponent = samsung_ac_f1f2com.class_("Samsung_AC_F1F2comCompo
 CONFIG_SCHEMA = cv.All(
     climate.CLIMATE_SCHEMA.extend(
         {
-            cv.GenerateID(): cv.declare_id(AirConditioner),
+            cv.GenerateID(): cv.declare_id(Samsung_AC_F1F2comComponent),
             #cv.Optional(CONF_SUPPORTED_MODES): cv.ensure_list(validate_modes),
             #cv.Optional(CONF_SUPPORTED_SWING_MODES): cv.ensure_list(
             #    validate_swing_modes
