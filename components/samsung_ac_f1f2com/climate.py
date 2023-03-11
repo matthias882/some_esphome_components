@@ -1,5 +1,4 @@
-#from esphome.components import climate, sensor, binary_sensor, uart
-from esphome.components import climate
+from esphome.components import climate, sensor, binary_sensor, uart
 import esphome.config_validation as cv
 import esphome.codegen as cg
 from esphome.const import (
@@ -31,8 +30,8 @@ from esphome.const import (
 #    ClimatePreset,
 #    ClimateSwingMode,
 #)
-#CODEOWNERS = ["matthias882"]
-#DEPENDENCIES = ["climate", "uart"]
+CODEOWNERS = ["matthias882"]
+DEPENDENCIES = ["climate", "uart"]
 AUTO_LOAD = ["sensor"]
 
 #CONF_SAMSUNG_AC_F1F2COM_ID = "samsung_ac_f1f2com_id"
