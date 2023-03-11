@@ -53,9 +53,9 @@ ALLOWED_CLIMATE_SWING_MODES = {
     "VERTICAL": ClimateSwingMode.CLIMATE_SWING_VERTICAL,
 }
 
-CUSTOM_FAN_MODES = {
-    "TURBO": Capabilities.TURBO,
-}
+#CUSTOM_FAN_MODES = {
+#    "TURBO": Capabilities.TURBO,
+#}
 
 validate_modes = cv.enum(ALLOWED_CLIMATE_MODES, upper=True)
 validate_swing_modes = cv.enum(ALLOWED_CLIMATE_SWING_MODES, upper=True)
