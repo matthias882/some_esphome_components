@@ -59,7 +59,7 @@ ALLOWED_CLIMATE_SWING_MODES = {
 
 validate_modes = cv.enum(ALLOWED_CLIMATE_MODES, upper=True)
 validate_swing_modes = cv.enum(ALLOWED_CLIMATE_SWING_MODES, upper=True)
-validate_custom_fan_modes = cv.enum(CUSTOM_FAN_MODES, upper=True)
+#validate_custom_fan_modes = cv.enum(CUSTOM_FAN_MODES, upper=True)
 
 CONFIG_SCHEMA = cv.All(
     climate.CLIMATE_SCHEMA.extend(
