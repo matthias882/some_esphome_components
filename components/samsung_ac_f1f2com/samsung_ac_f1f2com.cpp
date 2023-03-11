@@ -44,23 +44,23 @@ static const uint8_t ADDR_OUTDOOR_UNIT_1 = 0xC8;
 
 climate::ClimateTraits Samsung_AC_F1F2comComponent::traits() {
   auto traits = climate::ClimateTraits();
-  traits.set_supports_current_temperature(this->sensor_ != nullptr);
-  traits.set_supports_auto_mode(true);
-  traits.set_supports_cool_mode(this->supports_cool_);
-  traits.set_supports_heat_mode(this->supports_heat_);
-  traits.set_supports_two_point_target_temperature(false);
-  traits.set_supports_away(false);
-  traits.set_visual_min_temperature(YASHIMA_TEMP_MIN);
-  traits.set_visual_max_temperature(YASHIMA_TEMP_MAX);
-  traits.set_visual_temperature_step(1);
+  //traits.set_supports_current_temperature(this->sensor_ != nullptr);
+  //traits.set_supports_auto_mode(true);
+  //traits.set_supports_cool_mode(this->supports_cool_);
+  //traits.set_supports_heat_mode(this->supports_heat_);
+  //traits.set_supports_two_point_target_temperature(false);
+  //traits.set_supports_away(false);
+  //traits.set_visual_min_temperature(YASHIMA_TEMP_MIN);
+  //traits.set_visual_max_temperature(YASHIMA_TEMP_MAX);
+  //traits.set_visual_temperature_step(1);
   return traits;
 }
 
 void Samsung_AC_F1F2comComponent::control(const climate::ClimateCall &call) {
-  if (call.get_mode().has_value())
-    this->mode = *call.get_mode();
-  if (call.get_target_temperature().has_value())
-    this->target_temperature = *call.get_target_temperature();
+  //if (call.get_mode().has_value())
+  //  this->mode = *call.get_mode();
+  //if (call.get_target_temperature().has_value())
+  //  this->target_temperature = *call.get_target_temperature();
 
   this->transmit_state_();
   this->publish_state();
