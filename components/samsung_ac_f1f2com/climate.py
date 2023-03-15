@@ -42,7 +42,7 @@ AUTO_LOAD = ["sensor"]
 samsung_ac_f1f2com = cg.esphome_ns.namespace("samsung_ac_f1f2com")
 Samsung_AC_F1F2comComponent = samsung_ac_f1f2com.class_("Samsung_AC_F1F2comComponent", climate.Climate, cg.PollingComponent, uart.UARTDevice)
 
-Capabilities = samsung_ac_f1f2com_ns.namespace("Constants")
+#Capabilities = samsung_ac_f1f2com_ns.namespace("Constants")
 
 
 ALLOWED_CLIMATE_MODES = {
@@ -57,9 +57,9 @@ ALLOWED_CLIMATE_SWING_MODES = {
     "VERTICAL": ClimateSwingMode.CLIMATE_SWING_VERTICAL,
 }
 
-CUSTOM_FAN_MODES = {
-    "TURBO": Capabilities.TURBO,
-}
+#CUSTOM_FAN_MODES = {
+#    "TURBO": Capabilities.TURBO,
+#}
 
 validate_modes = cv.enum(ALLOWED_CLIMATE_MODES, upper=True)
 #validate_swing_modes = cv.enum(ALLOWED_CLIMATE_SWING_MODES, upper=True)
@@ -73,9 +73,9 @@ CONFIG_SCHEMA = cv.All(
             cv.Optional(CONF_SUPPORTED_SWING_MODES): cv.ensure_list(
                 validate_swing_modes
             ),
-            cv.Optional(CONF_CUSTOM_FAN_MODES): cv.ensure_list(
-                validate_custom_fan_modes
-            ),
+            #cv.Optional(CONF_CUSTOM_FAN_MODES): cv.ensure_list(
+            #    validate_custom_fan_modes
+            #),
         }
     )
     .extend(uart.UART_DEVICE_SCHEMA)
