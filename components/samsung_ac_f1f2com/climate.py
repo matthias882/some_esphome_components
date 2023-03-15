@@ -53,13 +53,13 @@ ALLOWED_CLIMATE_MODES = {
     "FAN_ONLY": ClimateMode.CLIMATE_MODE_FAN_ONLY,
 }
 
-#ALLOWED_CLIMATE_SWING_MODES = {
-#    "VERTICAL": ClimateSwingMode.CLIMATE_SWING_VERTICAL,
-#}
+ALLOWED_CLIMATE_SWING_MODES = {
+    "VERTICAL": ClimateSwingMode.CLIMATE_SWING_VERTICAL,
+}
 
-#CUSTOM_FAN_MODES = {
-#    "TURBO": Capabilities.TURBO,
-#}
+CUSTOM_FAN_MODES = {
+    "TURBO": Capabilities.TURBO,
+}
 
 validate_modes = cv.enum(ALLOWED_CLIMATE_MODES, upper=True)
 #validate_swing_modes = cv.enum(ALLOWED_CLIMATE_SWING_MODES, upper=True)
@@ -70,12 +70,12 @@ CONFIG_SCHEMA = cv.All(
         {
             cv.GenerateID(): cv.declare_id(Samsung_AC_F1F2comComponent),
             cv.Optional(CONF_SUPPORTED_MODES): cv.ensure_list(validate_modes),
-            #cv.Optional(CONF_SUPPORTED_SWING_MODES): cv.ensure_list(
-            #    validate_swing_modes
-            #),
-            #cv.Optional(CONF_CUSTOM_FAN_MODES): cv.ensure_list(
-            #    validate_custom_fan_modes
-            #),
+            cv.Optional(CONF_SUPPORTED_SWING_MODES): cv.ensure_list(
+                validate_swing_modes
+            ),
+            cv.Optional(CONF_CUSTOM_FAN_MODES): cv.ensure_list(
+                validate_custom_fan_modes
+            ),
         }
     )
     .extend(uart.UART_DEVICE_SCHEMA)
@@ -90,7 +90,7 @@ async def to_code(config):
     await climate.register_climate(var, config)
     if CONF_SUPPORTED_MODES in config:
         cg.add(var.set_supported_modes(config[CONF_SUPPORTED_MODES]))
-    #if CONF_SUPPORTED_SWING_MODES in config:
-    #    cg.add(var.set_supported_swing_modes(config[CONF_SUPPORTED_SWING_MODES]))
-    #if CONF_CUSTOM_FAN_MODES in config:
-    #    cg.add(var.set_custom_fan_modes(config[CONF_CUSTOM_FAN_MODES]))
+    if CONF_SUPPORTED_SWING_MODES in config:
+        cg.add(var.set_supported_swing_modes(config[CONF_SUPPORTED_SWING_MODES]))
+    if CONF_CUSTOM_FAN_MODES in config:
+        cg.add(var.set_custom_fan_modes(config[CONF_CUSTOM_FAN_MODES]))
