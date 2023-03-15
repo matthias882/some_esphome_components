@@ -28,11 +28,11 @@ from esphome.const import (
     UNIT_PERCENT,
     UNIT_WATT,
 )
-#from esphome.components.climate import (
-#    ClimateMode,
-#    ClimatePreset,
-#    ClimateSwingMode,
-#)
+from esphome.components.climate import (
+    ClimateMode,
+    ClimatePreset,
+    ClimateSwingMode,
+)
 CODEOWNERS = ["matthias882"]
 DEPENDENCIES = ["climate", "uart"]
 AUTO_LOAD = ["sensor"]
