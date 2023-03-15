@@ -42,7 +42,7 @@ AUTO_LOAD = ["sensor"]
 samsung_ac_f1f2com = cg.esphome_ns.namespace("samsung_ac_f1f2com")
 Samsung_AC_F1F2comComponent = samsung_ac_f1f2com.class_("Samsung_AC_F1F2comComponent", climate.Climate, cg.PollingComponent, uart.UARTDevice)
 
-#Capabilities = samsung_ac_f1f2com_ns.namespace("Constants")
+Capabilities = samsung_ac_f1f2com_ns.namespace("Constants")
 
 
 ALLOWED_CLIMATE_MODES = {
