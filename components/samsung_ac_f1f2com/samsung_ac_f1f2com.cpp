@@ -46,8 +46,8 @@ climate::ClimateTraits Samsung_AC_F1F2comComponent::traits() {
   auto traits = climate::ClimateTraits();
   //traits.set_supports_current_temperature(this->sensor_ != nullptr);
   traits.set_supports_auto_mode(true);
-  //traits.set_supports_cool_mode(this->supports_cool_);
-  //traits.set_supports_heat_mode(this->supports_heat_);
+  traits.set_supports_cool_mode(this->supports_cool_);
+  traits.set_supports_heat_mode(this->supports_heat_);
   //traits.set_supports_two_point_target_temperature(false);
   //traits.set_supports_away(false);
   //traits.set_visual_min_temperature(YASHIMA_TEMP_MIN);
